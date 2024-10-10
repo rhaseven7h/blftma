@@ -1,8 +1,7 @@
 {
   "extends": [
     "stylelint-config-standard",
-    "stylelint-scss",
-    "stylelint-config-prettier"
+    "stylelint-scss"
   ],
   "rules": {
     "at-rule-no-unknown": [
@@ -19,7 +18,6 @@
       }
     ],
     "import-notation": "string",
-    "selector-class-pattern": null,
     "selector-pseudo-class-no-unknown": [
       true,
       {
