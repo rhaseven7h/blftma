@@ -11,13 +11,19 @@ const geistMono = localFont({
   weight: '100 900'
 });
 
-export default function Home() {
+export default function Index() {
   return (
     <div
-      className={`${geistSans.variable} ${geistMono.variable} font-[family-name:var(--font-geist-sans)] container mx-auto !min-h-screen !h-screen`}
+      className={`${geistSans.variable} ${geistMono.variable} font-[family-name:var(--font-geist-sans)] container mx-auto h-full`}
     >
-      <div className={'bg-teal-50 container mx-auto my-8 border rounded-l p-4 !h-full !min-h-full'}>
-        <h1>Hello World!</h1>
+      <div
+        className={
+          'bg-neutral-50 border-x border-x-neutral-300 container mx-auto p-4 overflow-auto !h-full !min-h-full'
+        }
+      >
+        <div>
+          <h1>Hello World!</h1>
+        </div>
       </div>
     </div>
   );
