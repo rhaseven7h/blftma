@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model dummy_related {
+  id             Int         @id @default(autoincrement())
+  dummy_table_id Int
+  nickname       String      @unique(map: "dummy_related_nickname_u") @db.VarChar(32)
+  dummy_table    dummy_table @relation(fields: [dummy_table_id], references: [id], onUpdate: Restrict, map: "dummy_table_fk")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model dummy_table {
+  id            Int             @id @default(autoincrement())
+  name          String          @unique(map: "dummy_table_name_u") @db.VarChar(64)
+  age           Int
+  dummy_related dummy_related[]
+}
