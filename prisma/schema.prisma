@@ -8,17 +8,31 @@ datasource db {
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
-model dummy_related {
-  id             Int         @id @default(autoincrement())
-  dummy_table_id Int
-  nickname       String      @unique(map: "dummy_related_nickname_u") @db.VarChar(32)
-  dummy_table    dummy_table @relation(fields: [dummy_table_id], references: [id], onUpdate: Restrict, map: "dummy_table_fk")
+model accounts {
+  id   Int    @id(map: "accounts_pk") @default(autoincrement())
+  name String @unique(map: "accounts_name_uindex") @db.VarChar(128)
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
-model dummy_table {
-  id            Int             @id @default(autoincrement())
-  name          String          @unique(map: "dummy_table_name_u") @db.VarChar(64)
-  age           Int
-  dummy_related dummy_related[]
+model assessments {
+  id               Int @id(map: "assessments_pk") @default(autoincrement())
+  project_id       Int
+  year             Int
+  quarter          Int
+  level_initial    Int
+  level_managed    Int
+  level_defined    Int
+  level_measured   Int
+  level_optimizing Int
+
+  @@unique([project_id(sort: Desc), year(sort: Desc), quarter(sort: Desc)], map: "assessments_project_id_year_quarter_uindex")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model projects {
+  id          Int    @id(map: "projects_pk") @default(autoincrement())
+  account_id  Int
+  name        String @unique(map: "projects_name_uindex") @db.VarChar(128)
+  owner_name  String @db.VarChar(128)
+  owner_email String @db.VarChar(128)
 }

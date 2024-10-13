@@ -1,0 +1,42 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+title BLF TMA Database Schema
+
+class accounts {
+    serial id
+    string name
+}
+
+class projects {
+    serial id
+    integer account_id
+    string name
+    string owner_name
+    string owner_email
+}
+
+class assessments {
+    serial id
+    integer project_id
+    integer year
+    integer quarter
+    integer level_initial
+    integer level_managed
+    integer level_defined
+    integer level_measured
+    integer level_optimizing
+}
+
+class assessment_action_items {
+    serial id
+    integer assessment_id
+    integer kind
+    string summary
+}
+
+accounts "1" --right--{ "*" projects
+projects "1" --right--{ "*" assessments
+assessments "1" -down-{ "*" assessment_action_items
+
+@enduml

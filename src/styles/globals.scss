@@ -1,10 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@layer base {
-  /* noinspection Stylelint */
-  #__next, html, body {
-    @apply h-full;
-  }
-}
