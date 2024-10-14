@@ -3,6 +3,8 @@ import blftmaApi from '@/store/services/blftma';
 import pokemonApi from '@/store/services/pokemon';
 import type { RootState } from '@/store/store';
 import { Button, Table } from 'flowbite-react';
+import Link from 'next/link';
+import { TbAddressBook } from 'react-icons/tb';
 import { useDispatch, useSelector } from 'react-redux';
 
 const EditIcon = () => (
@@ -83,6 +85,12 @@ const AccountsPage = () => {
     <div className={'container mx-auto my-8'}>
       <div>
         <div className='prose max-w-none'>
+          <div className={'float-right'}>
+            <Link href={'/accounts/create'} className={'text-teal-500 flex flex-row flex-nowrap gap-2 items-center'}>
+              <TbAddressBook />
+              <span>Create Account</span>
+            </Link>
+          </div>
           <h1 className={'mt-8 border-b pb-4 border-b-blue-300 text-blue-700 mb-4'}>Accounts</h1>
         </div>
         <div className={'grid grid-cols-2 gap-4'}>

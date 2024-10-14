@@ -14,6 +14,14 @@ const blftmaApi = createApi({
   endpoints: (builder) => ({
     getAccounts: builder.query<Accounts, void>({
       query: () => `/accounts`
+    }),
+
+    createAccount: builder.mutation<Account, Omit<Account, 'id'>>({
+      query: (body) => ({
+        url: `/accounts`,
+        method: 'POST',
+        body
+      })
     })
   })
 });
