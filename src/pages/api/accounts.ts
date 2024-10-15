@@ -1,17 +1,11 @@
+import { Account, Accounts, AccountsResponse } from '@/types/accounts';
 import { Prisma, PrismaClient } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { z } from 'zod';
 
-type Account = {
-  id: number;
-  name: string;
-};
-
-type Accounts = Account[];
-
 const prisma = new PrismaClient();
 
-const getAccounts = async (req: NextApiRequest, res: NextApiResponse<Accounts | Error>) => {
+const getAccounts = async (req: NextApiRequest, res: NextApiResponse<AccountsResponse>) => {
   const getAccountsSchema = z.object({
     q: z.string().min(3).max(100).optional(),
     page: z.coerce.number().min(1).default(1),
@@ -27,18 +21,41 @@ const getAccounts = async (req: NextApiRequest, res: NextApiResponse<Accounts | 
     return;
   }
 
+  let accounts: Accounts = [];
+  let total: number = -1;
+
   try {
-    const accounts = await prisma.accounts.findMany({
+    accounts = await prisma.accounts.findMany({
       where: {
         name: {
           contains: validatedParams.data.q,
           mode: 'insensitive'
         }
       },
+      orderBy: {
+        name: 'asc'
+      },
       skip: (validatedParams.data.page - 1) * validatedParams.data.size,
       take: validatedParams.data.size
     });
-    res.status(200).json(accounts);
+
+    total = await prisma.accounts.count({
+      where: {
+        name: {
+          contains: validatedParams.data.q,
+          mode: 'insensitive'
+        }
+      }
+    });
+
+    const result = {
+      accounts,
+      total,
+      page: validatedParams.data.page,
+      size: validatedParams.data.size
+    };
+
+    res.status(200).json(result);
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       switch (e.code) {
@@ -104,7 +121,7 @@ const createAccount = async (req: NextApiRequest, res: NextApiResponse<Account |
   }
 };
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<Accounts | Account | Error>) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse<AccountsResponse | Account>) {
   switch (req.method) {
     case 'GET':
       return getAccounts(req, res);
