@@ -20,11 +20,11 @@ const DefaultLayout = ({
 }: PropsWithChildren<DefaultLayoutProps>) => {
   return (
     <>
-      <ToastContainer />
+      <ToastContainer autoClose={10000} />
       <div className={twMerge('container mx-auto flex flex-col flex-nowrap gap-4 my-8', className)}>
-        <header className={twMerge('p-8 border-b mb-4', headerClassName)}>
+        <header className={twMerge('py-8 border-b mb-4', headerClassName)}>
           <h1 className={'text-2xl font-bold uppercase'}>Business Leads Framework</h1>
-          <p className={'text-sm italic text-neutral-500'}>Technical Maturity Assessments</p>
+          <p className={'text-sm italic text-neutral-500'}>Technical Maturity Assessments Management.</p>
         </header>
         <main className={twMerge('flex flex-col flex-nowrap gap-4', mainClassName)}>{children}</main>
         <footer className={twMerge('border-t border-t-neutral-200 py-4 mt-4', footerClassName)}>

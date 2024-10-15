@@ -23,46 +23,64 @@ const AccountCreate = () => {
       name: ''
     }
   });
-  const onSubmit: SubmitHandler<AccountCreateForm> = (data) => {
-    createAccount(data)
-      .then((result) => {
-        if (result.error) {
-          const errorMessage = ((result.error as FetchBaseQueryError).data as Error).message;
-          toast(`Failed to create account: ${errorMessage}.`, { type: 'error' });
-        } else {
-          toast('Account created successfully.', { type: 'success' });
-          setValue('name', '');
+  const onSubmit: SubmitHandler<AccountCreateForm> = async (data) => {
+    try {
+      const result = await createAccount(data);
+      if (result.error) {
+        const fbqError = result.error as FetchBaseQueryError;
+        switch (fbqError.status) {
+          case 'FETCH_ERROR':
+            toast(`Failed to create account: Fetch error. ${fbqError.error}.`, { type: 'error' });
+            break;
+          case 'PARSING_ERROR':
+            toast(`Failed to create account: Invalid response. ${fbqError.error}.`, { type: 'error' });
+            break;
+          case 'TIMEOUT_ERROR':
+            toast(`Failed to create account: Timeout error. ${fbqError.error}.`, { type: 'error' });
+            break;
+          case 'CUSTOM_ERROR':
+            toast(`Failed to create account: Other error. ${fbqError.error}.`, { type: 'error' });
+            break;
+          default:
+            toast(
+              `Failed to create account: Unknown error. ` +
+                `Status ${fbqError.status}: ${JSON.stringify(fbqError.data)}.`,
+              { type: 'error' }
+            );
         }
-      })
-      .catch((error) => {
-        toast(`Failed to create account: ${error.message}.`, { type: 'error' });
-      });
+      } else {
+        toast('Account created successfully.', { type: 'success' });
+        setValue('name', '');
+      }
+    } catch (error) {
+      toast(`Failed to create account: ${(error as Error).message}.`, { type: 'error' });
+    }
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className='grow-0 w-[28em] flex flex-col gap-4 border p-4 rounded'>
-      <div>
-        <h2 className={'text-lg font-bold pb-4'}>New</h2>
-        <div className='mb-2 block'>
-          <Label htmlFor='name' value='Name' {...(errors.name && { color: 'failure' })} />
-        </div>
-        <Controller
-          name={'name'}
-          control={control}
-          render={({ field }) => (
-            <TextInput
-              {...field}
-              id='name'
-              type='text'
-              placeholder='Awesome company, Inc.'
-              required
-              {...(errors.name && { color: 'failure' })}
-              helperText={
-                (errors.name && 'Name is required, and between 3 and 128 characters.') || "Enter the account's name."
-              }
-            />
-          )}
-        />
+    <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4'>
+      <h2 className={'text-lg font-bold pb-4'}>New Account</h2>
+      <div className='mb-2 block'>
+        <Label htmlFor='name' value='Account Name' {...(errors.name && { color: 'failure' })} />
       </div>
+      <Controller
+        name={'name'}
+        control={control}
+        render={({ field }) => (
+          <TextInput
+            {...field}
+            id='name'
+            type='text'
+            placeholder='Awesome company, Inc.'
+            minLength={3}
+            maxLength={128}
+            required
+            {...(errors.name && { color: 'failure' })}
+            helperText={
+              (errors.name && 'Name is required, and between 3 and 128 characters.') || "Enter the account's name."
+            }
+          />
+        )}
+      />
       <Button type='submit'>Submit</Button>
     </form>
   );

@@ -8,13 +8,12 @@ const blftmaApi = createApi({
   tagTypes: ['Account'],
   endpoints: (builder) => ({
     getAccounts: builder.query<AccountsResult, GetAccountsQueryArgs>({
-      query: (queryParams: GetAccountsQueryArgs) => {
-        return {
+      query: (queryParams: GetAccountsQueryArgs) =>
+        ({
           url: `/accounts`,
           params: queryParams,
           method: 'GET'
-        } as FetchArgs;
-      },
+        }) as FetchArgs,
       providesTags: ['Account']
     }),
 

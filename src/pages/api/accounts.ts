@@ -124,9 +124,11 @@ const createAccount = async (req: NextApiRequest, res: NextApiResponse<Account |
 export default async function handler(req: NextApiRequest, res: NextApiResponse<AccountsResponse | Account>) {
   switch (req.method) {
     case 'GET':
-      return getAccounts(req, res);
+      await getAccounts(req, res);
+      break;
     case 'POST':
-      return createAccount(req, res);
+      await createAccount(req, res);
+      break;
     default:
       res.status(405).json({
         name: 'method-not-allowed',

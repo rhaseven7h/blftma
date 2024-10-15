@@ -46,7 +46,7 @@ const AccountsList = () => {
   };
 
   return (
-    <div className={'grow flex flex-col gap-4 border p-4 rounded'}>
+    <>
       <h2 className={'text-lg font-bold pb-4'}>Accounts</h2>
       <Table striped hoverable theme={accountsTableTheme}>
         <Table.Head>
@@ -78,7 +78,7 @@ const AccountsList = () => {
       <div className={'flex flex-row justify-center'}>
         <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChangeHandler} />
       </div>
-    </div>
+    </>
   );
 };
 
