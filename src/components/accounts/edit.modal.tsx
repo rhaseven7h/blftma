@@ -1,7 +1,9 @@
 import { Account } from "@/types/accounts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Label, Modal, TextInput } from "flowbite-react";
+import { useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { z } from "zod";
 
 export interface EditAccountModalProps {
@@ -24,20 +26,27 @@ const EditAccountModal = ({
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      name: account?.name || "AAA",
+      name: account?.name || "",
     },
   });
-  console.log("account>", account?.name || "AAA");
+
+  useEffect(() => {
+    reset({ name: account?.name || "" });
+  }, [account, reset]);
 
   const onSubmit: SubmitHandler<FormValues> = ({ name }: FormValues) => {
     if (!account) {
       return;
     }
-    onEdit({ ...account, name });
+    if (name === account.name) {
+      toast("No changes detected", { type: "info" });
+      onClose();
+    } else onEdit({ ...account, name });
   };
 
   return (
@@ -45,74 +54,71 @@ const EditAccountModal = ({
       <Modal.Header>Edit Account</Modal.Header>
       <Modal.Body>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div>O nome: {account?.name}</div>
-          <pre>
-            {errors
-              ? errors.name
-                ? errors.name.message
-                : "NO NAME ERROR"
-              : "NO ERRORS"}
-          </pre>
-          <Label
-            htmlFor={"editName"}
-            value={"Account Name"}
-            {...(errors.name && { color: "failure" })}
-          />
-          <Controller
-            name={"name"}
-            control={control}
-            render={({
-              field: editField,
-              fieldState: { error: editFieldError },
-            }) => (
-              <TextInput
-                {...editField}
-                id="editName"
-                type="text"
-                placeholder="Awesome company, Inc."
-                minLength={3}
-                maxLength={128}
-                required
-                {...(editFieldError && { color: "failure" })}
-                helperText={
-                  (editFieldError &&
-                    "Name is required, and between 3 and 128 characters.") ||
-                  "Enter the account's name."
-                }
-              />
+          <div className={"flex flex-col gap-4"}>
+            {!account && (
+              <span className={"text-neutral-500 italic"}>
+                No account provided
+              </span>
             )}
-          />
-          {/* TODO: Implement form elements */}
-          {(account && (
-            <div className={"mt-4"}>
-              <span>{account.id}</span>: <span>{account.name}</span>
-            </div>
-          )) || (
-            <span className={"text-neutral-500 italic"}>
-              No account provided
-            </span>
-          )}
+            {account && (
+              <>
+                <Label
+                  htmlFor={"editName"}
+                  value={"Account Name"}
+                  {...(errors.name && { color: "failure" })}
+                />
+                <Controller
+                  name={"name"}
+                  control={control}
+                  render={({
+                    field: editField,
+                    fieldState: { error: editFieldError },
+                  }) => (
+                    <TextInput
+                      {...editField}
+                      id="editName"
+                      type="text"
+                      placeholder="Awesome company, Inc."
+                      minLength={3}
+                      maxLength={128}
+                      required
+                      {...(editFieldError && { color: "failure" })}
+                      helperText={
+                        (editFieldError &&
+                          "Name is required, and between 3 and 128 characters.") ||
+                        "Enter the account's name."
+                      }
+                    />
+                  )}
+                />
+              </>
+            )}
+          </div>
+          <div
+            className={
+              "flex flex-row flex-nowrap justify-end gap-4 pt-4 border-t mt-8"
+            }
+          >
+            <Button
+              type={"button"}
+              color={"gray"}
+              size={"xl"}
+              onClick={onClose}
+              className={"px-4"}
+            >
+              Cancel
+            </Button>
+            <Button
+              type={"submit"}
+              color={"info"}
+              size={"xl"}
+              className={"px-4"}
+            >
+              Save changes
+            </Button>
+          </div>
         </form>
       </Modal.Body>
-      <Modal.Footer className={"flex flex-row flex-nowrap justify-end"}>
-        <Button
-          type={"button"}
-          color={"dark"}
-          size={"xl"}
-          onClick={onClose}
-          className={"px-4"}
-        >
-          Cancel
-        </Button>
-        <Button
-          type={"submit"}
-          color={"success"}
-          size={"xl"}
-          className={"px-4"}
-        >
-          Save changes
-        </Button>
-      </Modal.Footer>
     </Modal>
   );
 };

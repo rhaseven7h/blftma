@@ -2,6 +2,7 @@ import DeleteAccountPopup from "@/components/accounts/delete.modal";
 import EditAccountModal from "@/components/accounts/edit.modal";
 import blftmaApi from "@/store/services/blftma";
 import { Account } from "@/types/accounts";
+import { toastGenericError, toastRTKQResponse } from "@/util/rtkq";
 import { Button, Pagination, Table, theme } from "flowbite-react";
 import { useState } from "react";
 import { TbEdit, TbTrash } from "react-icons/tb";
@@ -122,13 +123,15 @@ const AccountsList = () => {
       return;
     }
     try {
-      await triggerUpdateAccount({ id, name });
+      const result = await triggerUpdateAccount({ id, name });
       closeEditAccountModal();
-      toast("Account updated successfully.", { type: "success" });
+      toastRTKQResponse(
+        "Account updated successfully.",
+        "Failed to update account.",
+        result.error,
+      );
     } catch (e) {
-      toast(`Failed to update account: ${(e as Error).message}.`, {
-        type: "error",
-      });
+      toastGenericError("Failed to update account", e);
     }
   };
 
