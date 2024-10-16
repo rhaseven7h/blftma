@@ -19,3 +19,16 @@ export interface GetAccountsQueryArgs {
   page?: number;
   size?: number;
 }
+
+export interface GetAccountQueryArgs {
+  id: number;
+}
+
+export interface UpdateAccountMutationArgs {
+  id: number;
+  name: string;
+}
+
+export interface DeleteAccountMutationArgs {
+  id: number;
+}
