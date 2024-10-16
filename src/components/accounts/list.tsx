@@ -4,8 +4,10 @@ import blftmaApi from "@/store/services/blftma";
 import { Account } from "@/types/accounts";
 import { toastGenericError, toastRTKQResponse } from "@/util/rtkq";
 import { Button, Pagination, Table, theme } from "flowbite-react";
+import { range } from "lodash";
 import { useState } from "react";
 import { TbEdit, TbTrash } from "react-icons/tb";
+import Select from "react-select";
 import { toast } from "react-toastify";
 import { twMerge } from "tailwind-merge";
 
@@ -49,7 +51,8 @@ const AccountsList = () => {
     return <div>No Accounts data</div>;
   }
 
-  const totalPages = Math.ceil(getAccountsResult.data.total / PAGE_SIZE);
+  const totalAccounts = getAccountsResult.data.total;
+  const totalPages = Math.ceil(totalAccounts / PAGE_SIZE);
   const currentPage = getAccountsResult.data.page;
 
   const accountsTableTheme = {
@@ -191,11 +194,34 @@ const AccountsList = () => {
           ))}
         </Table.Body>
       </Table>
-      <div className={"flex flex-row justify-center"}>
+      <div className={"flex flex-col items-center justify-center"}>
+        <div>
+          Showing accounts{" "}
+          <span className={"font-bold"}>{(page - 1) * PAGE_SIZE + 1}</span> to{" "}
+          <span className={"font-bold"}>{page * PAGE_SIZE}</span> out of{" "}
+          <span className={"font-bold"}>{totalAccounts}</span> accounts{" "}
+        </div>
+        <div className={"flex flex-row flex-nowrap gap-2 items-center"}>
+          <span>in page</span>
+          <Select
+            onChange={(selected) => {
+              selected && setPage(selected.value as number);
+            }}
+            value={{ value: currentPage, label: currentPage }}
+            options={range(totalPages).map((i) => ({
+              value: i + 1,
+              label: i + 1,
+            }))}
+          />
+          <span>
+            of out of <span className={"font-bold"}>{totalPages}</span> pages
+          </span>
+        </div>
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={onPageChangeHandler}
+          showIcons
         />
       </div>
     </>
