@@ -45,6 +45,14 @@ const AccountsList = () => {
     setPage(page);
   };
 
+  const onEditAccountHandler = (accountId: number) => () => {
+    console.log('Edit Account:', accountId);
+  };
+
+  const onDeleteAccountHandler = (accountId: number) => () => {
+    console.log('Delete Account:', accountId);
+  };
+
   return (
     <>
       <h2 className={'text-lg font-bold pb-4'}>Accounts</h2>
@@ -58,13 +66,13 @@ const AccountsList = () => {
             <Table.Row key={account.id}>
               <Table.Cell className={''}>{account.name}</Table.Cell>
               <Table.Cell className={'flex flex-row flex-nowrap gap-2 justify-end'}>
-                <Button color={'info'} size={'xs'} onClick={() => console.log('Edit Account.')}>
+                <Button color={'info'} size={'xs'} onClick={onEditAccountHandler(account.id)}>
                   <div className={'flex flex-row flex-nowrap gap-1 items-center'}>
                     <TbEdit />
                     <span>Edit</span>
                   </div>
                 </Button>
-                <Button color={'failure'} size={'xs'} onClick={() => console.log('Delete Account.')}>
+                <Button color={'failure'} size={'xs'} onClick={onDeleteAccountHandler(account.id)}>
                   <div className={'flex flex-row flex-nowrap gap-1 items-center'}>
                     <TbTrash />
                     <span>Delete</span>
