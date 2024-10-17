@@ -1,19 +1,21 @@
-import DeleteAccountPopup from "@/components/accounts/delete.modal";
+import DeleteAccountPopup from "@/components/accounts/delete.popup";
 import EditAccountModal from "@/components/accounts/edit.modal";
+import { DEFAULT_PAGE_SIZE } from "@/constants/common";
 import blftmaApi from "@/store/services/blftma";
 import { Account } from "@/types/accounts";
 import { toastGenericError, toastRTKQResponse } from "@/util/rtkq";
 import { Button, Pagination, Table, theme } from "flowbite-react";
 import { range } from "lodash";
+import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import { TbEdit, TbTrash } from "react-icons/tb";
 import Select from "react-select";
 import { toast } from "react-toastify";
 import { twMerge } from "tailwind-merge";
 
-const PAGE_SIZE = 3;
-
 const AccountsList = () => {
+  const { i18n } = useTranslation();
+  const t = i18n.getFixedT(null, null, "components.accounts.list");
   const [page, setPage] = useState(1);
   const [editModalSettings, setEditModalSettings] = useState<{
     open: boolean;
@@ -26,7 +28,7 @@ const AccountsList = () => {
 
   const getAccountsResult = blftmaApi.useGetAccountsQuery({
     page: page,
-    size: PAGE_SIZE,
+    size: DEFAULT_PAGE_SIZE,
   });
   const [triggerDeleteAccount] = blftmaApi.useDeleteAccountMutation();
   const [triggerUpdateAccount] = blftmaApi.useUpdateAccountMutation();
@@ -37,22 +39,26 @@ const AccountsList = () => {
     getAccountsResult.isFetching
   ) {
     return (
-      <div className={"container mx-auto py-16 bold text-center uppercase"}>
-        Loading...
+      <div className={"container mx-auto py-16 bold text-center font-bold"}>
+        {t("loading")}
       </div>
     );
   }
 
   if (getAccountsResult.error) {
-    return <div>Accounts Error: {getAccountsResult.error.toString()}</div>;
+    return (
+      <div>
+        {t("accountsError")}: {getAccountsResult.error.toString()}
+      </div>
+    );
   }
 
   if (!getAccountsResult.data) {
-    return <div>No Accounts data</div>;
+    return <div>{t("noAccountsData")}</div>;
   }
 
   const totalAccounts = getAccountsResult.data.total;
-  const totalPages = Math.ceil(totalAccounts / PAGE_SIZE);
+  const totalPages = Math.ceil(totalAccounts / DEFAULT_PAGE_SIZE);
   const currentPage = getAccountsResult.data.page;
 
   const accountsTableTheme = {
@@ -113,9 +119,9 @@ const AccountsList = () => {
     try {
       await triggerDeleteAccount({ id: deletePopupSettings.account.id });
       closeDeleteAccountModal();
-      toast("Account deleted successfully.", { type: "success" });
+      toast(t("account_deleted_successfully"), { type: "success" });
     } catch (e) {
-      toast(`Failed to delete account: ${(e as Error).message}.`, {
+      toast(t("failed_to_delete_account") + ": ${(e as Error).message}.", {
         type: "error",
       });
     }
@@ -129,12 +135,12 @@ const AccountsList = () => {
       const result = await triggerUpdateAccount({ id, name });
       closeEditAccountModal();
       toastRTKQResponse(
-        "Account updated successfully.",
-        "Failed to update account.",
+        t("account_updated_successfully"),
+        t("failed_to_update_account"),
         result.error,
       );
     } catch (e) {
-      toastGenericError("Failed to update account", e);
+      toastGenericError(t("failed_to_update_account"), e);
     }
   };
 
@@ -152,11 +158,13 @@ const AccountsList = () => {
         onDelete={deleteAccount}
         accountName={deletePopupSettings.account?.name ?? "Unknown"}
       />
-      <h2 className={"text-lg font-bold pb-4"}>Accounts</h2>
+      <h2 className={"text-lg font-bold pb-4"}>{t("accounts")}</h2>
       <Table striped hoverable theme={accountsTableTheme}>
         <Table.Head>
-          <Table.HeadCell>Account Name</Table.HeadCell>
-          <Table.HeadCell className={"text-right"}>Actions</Table.HeadCell>
+          <Table.HeadCell>{t("account_name")}</Table.HeadCell>
+          <Table.HeadCell className={"text-right"}>
+            {t("actions")}
+          </Table.HeadCell>
         </Table.Head>
         <Table.Body>
           {getAccountsResult.data.accounts.map((account) => (
@@ -174,7 +182,7 @@ const AccountsList = () => {
                     className={"flex flex-row flex-nowrap gap-1 items-center"}
                   >
                     <TbEdit />
-                    <span>Edit</span>
+                    <span>{t("edit")}</span>
                   </div>
                 </Button>
                 <Button
@@ -186,7 +194,7 @@ const AccountsList = () => {
                     className={"flex flex-row flex-nowrap gap-1 items-center"}
                   >
                     <TbTrash />
-                    <span>Delete</span>
+                    <span>{t("delete")}</span>
                   </div>
                 </Button>
               </Table.Cell>
@@ -195,15 +203,26 @@ const AccountsList = () => {
         </Table.Body>
       </Table>
       <div className={"flex flex-col items-center justify-center"}>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={onPageChangeHandler}
+          showIcons
+        />
         <div>
-          Showing accounts{" "}
-          <span className={"font-bold"}>{(page - 1) * PAGE_SIZE + 1}</span> to{" "}
-          <span className={"font-bold"}>{page * PAGE_SIZE}</span> out of{" "}
-          <span className={"font-bold"}>{totalAccounts}</span> accounts{" "}
+          {t("showing_accounts")}{" "}
+          <span className={"font-bold"}>
+            {(page - 1) * DEFAULT_PAGE_SIZE + 1}
+          </span>{" "}
+          {t("to")}{" "}
+          <span className={"font-bold"}>{page * DEFAULT_PAGE_SIZE}</span>{" "}
+          {t("out_of")} <span className={"font-bold"}>{totalAccounts}</span>{" "}
+          {t("accountsLowercase")}{" "}
         </div>
         <div className={"flex flex-row flex-nowrap gap-2 items-center"}>
-          <span>in page</span>
+          <span>{t("in_page")}</span>
           <Select
+            isSearchable={false}
             onChange={(selected) => {
               selected && setPage(selected.value as number);
             }}
@@ -214,15 +233,10 @@ const AccountsList = () => {
             }))}
           />
           <span>
-            of out of <span className={"font-bold"}>{totalPages}</span> pages
+            {t("out_of")} <span className={"font-bold"}>{totalPages}</span>{" "}
+            {t("pages")}
           </span>
         </div>
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={onPageChangeHandler}
-          showIcons
-        />
       </div>
     </>
   );

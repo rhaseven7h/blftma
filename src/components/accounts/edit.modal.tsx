@@ -1,6 +1,7 @@
 import { Account } from "@/types/accounts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Label, Modal, TextInput } from "flowbite-react";
+import { useTranslation } from "next-i18next";
 import { useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -19,6 +20,8 @@ const EditAccountModal = ({
   onEdit,
   account,
 }: EditAccountModalProps) => {
+  const { i18n } = useTranslation();
+  const t = i18n.getFixedT(null, null, "components.accounts.edit.modal");
   const schema = z.object({
     name: z.string().min(3).max(128).trim(),
   });
@@ -44,27 +47,27 @@ const EditAccountModal = ({
       return;
     }
     if (name === account.name) {
-      toast("No changes detected", { type: "info" });
+      toast(t("no_changes_detected"), { type: "info" });
       onClose();
     } else onEdit({ ...account, name });
   };
 
   return (
     <Modal show={show} onClose={onClose} dismissible>
-      <Modal.Header>Edit Account</Modal.Header>
+      <Modal.Header>{t("edit_account")}</Modal.Header>
       <Modal.Body>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className={"flex flex-col gap-4"}>
             {!account && (
               <span className={"text-neutral-500 italic"}>
-                No account provided
+                {t("no_account_provided")}
               </span>
             )}
             {account && (
               <>
                 <Label
                   htmlFor={"editName"}
-                  value={"Account Name"}
+                  value={t("account_name")}
                   {...(errors.name && { color: "failure" })}
                 />
                 <Controller
@@ -78,15 +81,17 @@ const EditAccountModal = ({
                       {...editField}
                       id="editName"
                       type="text"
-                      placeholder="Awesome company, Inc."
+                      placeholder={t("account_name_placeholder")}
                       minLength={3}
                       maxLength={128}
                       required
                       {...(editFieldError && { color: "failure" })}
                       helperText={
                         (editFieldError &&
-                          "Name is required, and between 3 and 128 characters.") ||
-                        "Enter the account's name."
+                          t(
+                            "name_is_required_and_between_3_and_128_characters",
+                          )) ||
+                        t("enter_the_account_s_name")
                       }
                     />
                   )}
@@ -106,7 +111,7 @@ const EditAccountModal = ({
               onClick={onClose}
               className={"px-4"}
             >
-              Cancel
+              {t("cancel")}
             </Button>
             <Button
               type={"submit"}
@@ -114,7 +119,7 @@ const EditAccountModal = ({
               size={"xl"}
               className={"px-4"}
             >
-              Save changes
+              {t("save_changes")}
             </Button>
           </div>
         </form>

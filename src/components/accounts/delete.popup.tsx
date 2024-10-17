@@ -1,4 +1,5 @@
 import { Button, Modal } from "flowbite-react";
+import { useTranslation } from "next-i18next";
 import { TbExclamationCircle } from "react-icons/tb";
 
 export interface DeleteAccountPopupProps {
@@ -14,12 +15,14 @@ const DeleteAccountPopup = ({
   onDelete,
   accountName,
 }: DeleteAccountPopupProps) => {
+  const { i18n } = useTranslation();
+  const t = i18n.getFixedT(null, null, "components.accounts.delete.popup");
   return (
     <Modal show={show} onClose={onClose} dismissible popup>
       <Modal.Header />
       <Modal.Body className={"flex flex-col flex-nowrap items-center"}>
         <TbExclamationCircle className={"text-red-500 text-9xl"} />
-        <p>Are you sure you want to delete this account:</p>
+        <p>{t("are_you_sure_you_want_to_delete_this_account")}:</p>
         <p className={"mt-8 mb-4 font-bold text-2xl text-wrap"}>
           {accountName}
         </p>
@@ -33,7 +36,7 @@ const DeleteAccountPopup = ({
           color={"gray"}
           onClick={onClose}
         >
-          <span>Cancel</span>
+          <span>{t("cancel")}</span>
         </Button>
         <Button
           size={"xl"}
@@ -41,7 +44,7 @@ const DeleteAccountPopup = ({
           color={"failure"}
           onClick={onDelete}
         >
-          <span>Delete</span>
+          <span>{t("delete")}</span>
         </Button>
       </Modal.Footer>
     </Modal>

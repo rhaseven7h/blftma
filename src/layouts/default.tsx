@@ -1,3 +1,4 @@
+import { useTranslation } from "next-i18next";
 import { PropsWithChildren } from "react";
 import { ToastContainer } from "react-toastify";
 import { twMerge } from "tailwind-merge";
@@ -18,6 +19,8 @@ const DefaultLayout = ({
   mainClassName,
   footerClassName,
 }: PropsWithChildren<DefaultLayoutProps>) => {
+  const { i18n, t: tAll } = useTranslation("common");
+  const t = i18n.getFixedT(null, null, "layouts.default");
   return (
     <>
       <ToastContainer />
@@ -28,12 +31,8 @@ const DefaultLayout = ({
         )}
       >
         <header className={twMerge("py-8 border-b mb-4", headerClassName)}>
-          <h1 className={"text-2xl font-bold uppercase"}>
-            Business Leads Framework
-          </h1>
-          <p className={"text-sm italic text-neutral-500"}>
-            Technical Maturity Assessments Management.
-          </p>
+          <h1 className={"text-2xl font-bold uppercase"}>{t("title")}</h1>
+          <p className={"text-sm italic text-neutral-500"}>{t("subtitle")}</p>
         </header>
         <main
           className={twMerge("flex flex-col flex-nowrap gap-4", mainClassName)}
@@ -46,9 +45,12 @@ const DefaultLayout = ({
             footerClassName,
           )}
         >
-          <span className={"text-sm text-neutral-500 italic"}>
-            Copyright &copy; 2024 Gabriel Medina. All rights reserved.
-          </span>
+          <span
+            className={"text-sm text-neutral-500 italic"}
+            dangerouslySetInnerHTML={{
+              __html: tAll("general.copyright"),
+            }}
+          />
         </footer>
       </div>
     </>
