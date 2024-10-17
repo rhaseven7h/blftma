@@ -1,24 +1,26 @@
-import DefaultLayout from "@/layouts/default";
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import DefaultLayout from '@/layouts/default';
+import {useTranslation} from 'next-i18next';
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations';
+import Link from 'next/link';
 
-export async function getStaticProps({ locale }: { locale: string }) {
+export async function getStaticProps({locale}: {locale: string}) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common"])),
-    },
+      ...(await serverSideTranslations(locale, ['common']))
+    }
   };
 }
 
 export default function Index() {
-  const { i18n } = useTranslation();
-  const t = i18n.getFixedT(null, null, "pages.index");
+  const {i18n} = useTranslation();
+  const t = i18n.getFixedT(null, null, 'pages.index');
   return (
     <DefaultLayout>
-      <div className={"container mx-auto my-8"}>
-        <div className={"prose max-w-none"}>
-          <h1>{t("title")}</h1>
-          <p>{t("description")}</p>
+      <div className={'container mx-auto my-8'}>
+        <div className={'prose max-w-none'}>
+          <h1>{t('title')}</h1>
+          <p>{t('description')}</p>
+          <p><Link href={'/accounts'} className={'text-teal-700'}>Go to Accounts management</Link></p>
         </div>
       </div>
     </DefaultLayout>
