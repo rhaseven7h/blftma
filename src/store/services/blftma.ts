@@ -12,7 +12,7 @@ import { createApi, FetchArgs, fetchBaseQuery } from '@reduxjs/toolkit/query/rea
 const blftmaApi = createApi({
   reducerPath: 'blftmaApi',
   baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
-  tagTypes: ['Accounts'],
+  tagTypes: [ 'Accounts' ],
   endpoints: (builder) => ({
     getAccounts: builder.query<AccountsResult, GetAccountsQueryArgs>({
       query: ({ q, page, size }: GetAccountsQueryArgs) =>
@@ -21,7 +21,7 @@ const blftmaApi = createApi({
           params: { q, page, size },
           method: 'GET'
         }) as FetchArgs,
-      providesTags: ['Accounts']
+      providesTags: [ 'Accounts' ]
     }),
 
     createAccount: builder.mutation<Account, Omit<Account, 'id'>>({
@@ -30,34 +30,34 @@ const blftmaApi = createApi({
         method: 'POST',
         body
       }),
-      invalidatesTags: ['Accounts']
+      invalidatesTags: [ 'Accounts' ]
     }),
 
     getAccount: builder.query<AccountsResult, GetAccountQueryArgs>({
       query: ({ id }: GetAccountQueryArgs) =>
         ({
-          url: `/accounts/${id}`,
+          url: `/accounts/${ id }`,
           method: 'GET'
         }) as FetchArgs
     }),
 
     updateAccount: builder.mutation<Account, UpdateAccountMutationArgs>({
       query: ({ id, name }: UpdateAccountMutationArgs) => ({
-        url: `/accounts/${id}`,
+        url: `/accounts/${ id }`,
         method: 'PATCH',
         body: {
           name
         }
       }),
-      invalidatesTags: ['Accounts']
+      invalidatesTags: [ 'Accounts' ]
     }),
 
     deleteAccount: builder.mutation<Account, DeleteAccountMutationArgs>({
       query: ({ id }: DeleteAccountMutationArgs) => ({
-        url: `/accounts/${id}`,
+        url: `/accounts/${ id }`,
         method: 'DELETE'
       }),
-      invalidatesTags: ['Accounts']
+      invalidatesTags: [ 'Accounts' ]
     })
   })
 });
