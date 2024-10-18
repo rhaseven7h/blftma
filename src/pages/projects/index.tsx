@@ -1,23 +1,31 @@
-import DefaultLayout from "@/layouts/default";
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import DefaultLayout from '@/layouts/default';
+import { setSelectedMenuItem } from '@/store/features/applicationSlice';
+import NavbarMenuItems from '@/types/application';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common"])),
-    },
+      ...(await serverSideTranslations(locale, [ 'common' ]))
+    }
   };
 }
 
 const ProjectsPage = () => {
+  const dispatch = useDispatch();
   const { i18n } = useTranslation();
-  const t = i18n.getFixedT(null, null, "pages.projects");
+  const t = i18n.getFixedT(null, null, 'pages.projects');
+  useEffect(() => {
+    dispatch(setSelectedMenuItem(NavbarMenuItems.PROJECTS));
+  }, []);
   return (
     <DefaultLayout>
-      <div className={"prose max-w-none flex flex-col flex-nowrap gap-2"}>
-        <h1>{t("projects")}</h1>
-        <p>{t("projects_associated_to_accounts")}</p>
+      <div className={ 'prose max-w-none flex flex-col flex-nowrap gap-2' }>
+        <h1>{ t('projects') }</h1>
+        <p>{ t('projects_associated_to_accounts') }</p>
         <p>
           Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
           nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
@@ -48,7 +56,7 @@ const ProjectsPage = () => {
           Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse
           molestie consequat, vel illum dolore eu feugiat nulla facilisis at
           vero eros et accumsan et iusto odio dignissim qui blandit praesent
-          luptatum zzril delenit augue duis dolore te feugait nulla facilisi.{" "}
+          luptatum zzril delenit augue duis dolore te feugait nulla facilisi.{ ' ' }
         </p>
       </div>
     </DefaultLayout>

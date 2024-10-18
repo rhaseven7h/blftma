@@ -1,9 +1,15 @@
-import { useTranslation } from "next-i18next";
-import { PropsWithChildren } from "react";
-import { ToastContainer } from "react-toastify";
-import { twMerge } from "tailwind-merge";
+import { RootState } from '@/store/store';
+import NavbarMenuItems from '@/types/application';
+import { Navbar, theme } from 'flowbite-react';
+import { useTranslation } from 'next-i18next';
+import Link from 'next/link';
+import { PropsWithChildren } from 'react';
+import { TbBinaryTree2 } from 'react-icons/tb';
+import { useSelector } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import { twMerge } from 'tailwind-merge';
 
-import "react-toastify/dist/ReactToastify.css";
+import 'react-toastify/dist/ReactToastify.css';
 
 interface DefaultLayoutProps {
   className?: string;
@@ -17,39 +23,87 @@ const DefaultLayout = ({
   className,
   headerClassName,
   mainClassName,
-  footerClassName,
+  footerClassName
 }: PropsWithChildren<DefaultLayoutProps>) => {
-  const { i18n, t: tAll } = useTranslation("common");
-  const t = i18n.getFixedT(null, null, "layouts.default");
+  const navbarSelectedMenuItem = useSelector(
+    (state: RootState) => state.application.selectedMenuItem
+  );
+  const { i18n, t: tAll } = useTranslation('common');
+  const t = i18n.getFixedT(null, null, 'layouts.default');
+  const navbarTheme = {
+    root: {
+      base: twMerge(theme.navbar.root.base, 'bg-neutral-50 shadow-md border-b border-b-neutral-200')
+    },
+    link: {
+      base: twMerge(theme.navbar.link.base, 'text-base uppercase')
+    }
+  };
   return (
     <>
-      <ToastContainer />
+      <ToastContainer/>
+      <Navbar border theme={ navbarTheme }>
+        <Navbar.Brand as={ Link } href={ '/' }>
+          <div className={ 'flex flex-row flex-nowrap items-center' }>
+            <TbBinaryTree2 className={ 'text-6xl rotate-[225deg] text-red-500' }/>
+            <div className={ 'flex flex-row gap-8 ml-4 items-center' }>
+              <span className="text-5xl font-black text-red-700">
+                BLF/TMA
+              </span>
+              <div className={ 'flex flex-col justify-start text-sm italic text-neutral-500' }>
+                <span className="">
+                  Technical Maturity Assessments Management Application
+                </span>
+                <span className="">
+                  Part of Wizeline&apos;s Business Logic Framework
+                </span>
+              </div>
+            </div>
+          </div>
+        </Navbar.Brand>
+        <Navbar.Toggle/>
+        <Navbar.Collapse className={ '' }>
+          <Navbar.Link
+            as={ Link }
+            href="/"
+            active={ navbarSelectedMenuItem === NavbarMenuItems.HOME }>
+            Home
+          </Navbar.Link>
+          <Navbar.Link
+            as={ Link }
+            href="/accounts"
+            active={ navbarSelectedMenuItem === NavbarMenuItems.ACCOUNTS }>
+            Accounts
+          </Navbar.Link>
+          <Navbar.Link
+            as={ Link }
+            href="/projects"
+            active={ navbarSelectedMenuItem === NavbarMenuItems.PROJECTS }>
+            Projects
+          </Navbar.Link>
+        </Navbar.Collapse>
+      </Navbar>
       <div
-        className={twMerge(
-          "container mx-auto flex flex-col flex-nowrap gap-4 my-8",
-          className,
-        )}
+        className={ twMerge(
+          'container mx-auto flex flex-col flex-nowrap gap-4 my-8',
+          className
+        ) }
       >
-        <header className={twMerge("py-8 border-b mb-4", headerClassName)}>
-          <h1 className={"text-2xl font-bold uppercase"}>{t("title")}</h1>
-          <p className={"text-sm italic text-neutral-500"}>{t("subtitle")}</p>
-        </header>
         <main
-          className={twMerge("flex flex-col flex-nowrap gap-4", mainClassName)}
+          className={ twMerge('flex flex-col flex-nowrap gap-4', mainClassName) }
         >
-          {children}
+          { children }
         </main>
         <footer
-          className={twMerge(
-            "border-t border-t-neutral-200 py-4 mt-4",
-            footerClassName,
-          )}
+          className={ twMerge(
+            'border-t border-t-neutral-200 py-4 mt-4',
+            footerClassName
+          ) }
         >
           <span
-            className={"text-sm text-neutral-500 italic"}
-            dangerouslySetInnerHTML={{
-              __html: tAll("general.copyright"),
-            }}
+            className={ 'text-sm text-neutral-500 italic' }
+            dangerouslySetInnerHTML={ {
+              __html: tAll('general.copyright')
+            } }
           />
         </footer>
       </div>
