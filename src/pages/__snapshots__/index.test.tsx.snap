@@ -1,0 +1,193 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Index should render 1`] = `
+<div>
+  <div
+    class="Toastify"
+  />
+  <nav
+    class="px-2 py-2.5 dark:border-gray-700 dark:bg-gray-800 sm:px-4 bg-neutral-50 shadow-md border-b-neutral-200 border"
+  >
+    <div
+      class="mx-auto flex flex-wrap items-center justify-between container"
+    >
+      <a
+        class="flex items-center"
+        href="/"
+      >
+        <div
+          class="flex flex-row flex-nowrap items-center"
+        >
+          <svg
+            class="text-4xl rotate-[225deg] text-red-500"
+            fill="none"
+            height="1em"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M14 6a2 2 0 1 0 -4 0a2 2 0 0 0 4 0z"
+            />
+            <path
+              d="M7 14a2 2 0 1 0 -4 0a2 2 0 0 0 4 0z"
+            />
+            <path
+              d="M21 14a2 2 0 1 0 -4 0a2 2 0 0 0 4 0z"
+            />
+            <path
+              d="M14 18a2 2 0 1 0 -4 0a2 2 0 0 0 4 0z"
+            />
+            <path
+              d="M12 8v8"
+            />
+            <path
+              d="M6.316 12.496l4.368 -4.992"
+            />
+            <path
+              d="M17.684 12.496l-4.366 -4.99"
+            />
+          </svg>
+          <div
+            class="flex flex-row gap-8 ml-4 items-center"
+          >
+            <span
+              class="text-4xl font-black text-red-700"
+            >
+              BLF/TMA
+            </span>
+            <div
+              class="flex flex-col justify-start text-[0.5em] italic text-neutral-500"
+            >
+              <span
+                class=""
+              >
+                Technical Maturity Assessments Management Application
+              </span>
+              <span
+                class=""
+              >
+                Part of Wizeline's Business Logic Framework
+              </span>
+            </div>
+          </div>
+        </div>
+      </a>
+      <button
+        class="inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 md:hidden"
+        data-testid="flowbite-navbar-toggle"
+      >
+        <span
+          class="sr-only"
+        >
+          Open main menu
+        </span>
+        <svg
+          aria-hidden="true"
+          class="h-6 w-6 shrink-0"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 448 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"
+          />
+        </svg>
+      </button>
+      <div
+        class="w-full md:block md:w-auto hidden"
+        data-testid="flowbite-navbar-collapse"
+      >
+        <ul
+          class="mt-4 flex flex-col md:mt-0 md:flex-row md:space-x-8 md:text-sm md:font-medium"
+        >
+          <li>
+            <a
+              class="block py-2 pl-3 pr-4 md:p-0 text-base uppercase bg-cyan-700 text-white dark:text-white md:bg-transparent md:text-cyan-700"
+              href="/"
+            >
+              Home
+            </a>
+          </li>
+          <li>
+            <a
+              class="block py-2 pl-3 pr-4 md:p-0 text-base uppercase border-b border-gray-100 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:hover:bg-transparent md:hover:text-cyan-700 md:dark:hover:bg-transparent md:dark:hover:text-white"
+              href="/accounts"
+            >
+              Accounts
+            </a>
+          </li>
+          <li>
+            <a
+              class="block py-2 pl-3 pr-4 md:p-0 text-base uppercase border-b border-gray-100 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:hover:bg-transparent md:hover:text-cyan-700 md:dark:hover:bg-transparent md:dark:hover:text-white"
+              href="/projects"
+            >
+              Projects
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div
+    class="container mx-auto flex flex-col flex-nowrap gap-4 my-8"
+  >
+    <main
+      class="flex flex-col flex-nowrap gap-4"
+    >
+      <div
+        class="container mx-auto my-8"
+      >
+        <div
+          class="prose max-w-none"
+        >
+          <h1>
+            title
+          </h1>
+          <p>
+            description
+          </p>
+          <p>
+            Pages Links
+          </p>
+          <ul>
+            <li>
+              <a
+                class="text-teal-700"
+                href="/accounts"
+              >
+                Go to Accounts management
+              </a>
+            </li>
+            <li>
+              <a
+                class="text-teal-700"
+                href="/projects"
+              >
+                Go to Projects management
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </main>
+    <footer
+      class="border-t border-t-neutral-200 py-4 mt-4"
+    >
+      <span
+        class="text-sm text-neutral-500 italic"
+      >
+        general.copyright
+      </span>
+    </footer>
+  </div>
+</div>
+`;
