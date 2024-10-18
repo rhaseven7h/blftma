@@ -44,12 +44,12 @@ const DefaultLayout = ({
       <Navbar border theme={ navbarTheme }>
         <Navbar.Brand as={ Link } href={ '/' }>
           <div className={ 'flex flex-row flex-nowrap items-center' }>
-            <TbBinaryTree2 className={ 'text-6xl rotate-[225deg] text-red-500' }/>
+            <TbBinaryTree2 className={ 'text-4xl rotate-[225deg] text-red-500' }/>
             <div className={ 'flex flex-row gap-8 ml-4 items-center' }>
-              <span className="text-5xl font-black text-red-700">
+              <span className="text-4xl font-black text-red-700">
                 BLF/TMA
               </span>
-              <div className={ 'flex flex-col justify-start text-sm italic text-neutral-500' }>
+              <div className={ 'flex flex-col justify-start text-[0.5em] italic text-neutral-500' }>
                 <span className="">
                   Technical Maturity Assessments Management Application
                 </span>
