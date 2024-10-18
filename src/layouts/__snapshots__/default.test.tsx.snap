@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Index should render 1`] = `
+exports[`DefaultLayout should render 1`] = `
 <div>
   <div
     class="Toastify"
@@ -143,41 +143,9 @@ exports[`Index should render 1`] = `
     <main
       class="flex flex-col flex-nowrap gap-4"
     >
-      <div
-        class="container mx-auto my-8"
-      >
-        <div
-          class="prose max-w-none"
-        >
-          <h1>
-            title
-          </h1>
-          <p>
-            description
-          </p>
-          <p>
-            Pages Links
-          </p>
-          <ul>
-            <li>
-              <a
-                class="text-teal-700"
-                href="/accounts"
-              >
-                Go to Accounts management
-              </a>
-            </li>
-            <li>
-              <a
-                class="text-teal-700"
-                href="/projects"
-              >
-                Go to Projects management
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <p>
+        Page Content
+      </p>
     </main>
     <footer
       class="border-t border-t-neutral-200 py-4 mt-4"
