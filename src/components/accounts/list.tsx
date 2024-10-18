@@ -1,21 +1,21 @@
-import DeleteAccountPopup from "@/components/accounts/delete.popup";
-import EditAccountModal from "@/components/accounts/edit.modal";
-import { DEFAULT_PAGE_SIZE } from "@/constants/common";
-import blftmaApi from "@/store/services/blftma";
-import { Account } from "@/types/accounts";
-import { toastGenericError, toastRTKQResponse } from "@/util/rtkq";
-import { Button, Pagination, Table, theme } from "flowbite-react";
-import { range } from "lodash";
-import { useTranslation } from "next-i18next";
-import { useState } from "react";
-import { TbEdit, TbTrash } from "react-icons/tb";
-import Select from "react-select";
-import { toast } from "react-toastify";
-import { twMerge } from "tailwind-merge";
+import DeleteAccountPopup from '@/components/accounts/delete.popup';
+import EditAccountModal from '@/components/accounts/edit.modal';
+import { DEFAULT_PAGE_SIZE } from '@/constants/common';
+import blftmaApi from '@/store/services/blftma';
+import { Account } from '@/types/accounts';
+import { toastGenericError, toastRTKQResponse } from '@/util/rtkq';
+import { Button, Pagination, Table, theme } from 'flowbite-react';
+import { range } from 'lodash';
+import { useTranslation } from 'next-i18next';
+import { useState } from 'react';
+import { TbEdit, TbTrash } from 'react-icons/tb';
+import Select from 'react-select';
+import { toast } from 'react-toastify';
+import { twMerge } from 'tailwind-merge';
 
 const AccountsList = () => {
   const { i18n } = useTranslation();
-  const t = i18n.getFixedT(null, null, "components.accounts.list");
+  const t = i18n.getFixedT(null, null, 'components.accounts.list');
   const [page, setPage] = useState(1);
   const [editModalSettings, setEditModalSettings] = useState<{
     open: boolean;
@@ -33,28 +33,20 @@ const AccountsList = () => {
   const [triggerDeleteAccount] = blftmaApi.useDeleteAccountMutation();
   const [triggerUpdateAccount] = blftmaApi.useUpdateAccountMutation();
 
-  if (
-    getAccountsResult.isLoading ||
-    getAccountsResult.isUninitialized ||
-    getAccountsResult.isFetching
-  ) {
-    return (
-      <div className={"container mx-auto py-16 bold text-center font-bold"}>
-        {t("loading")}
-      </div>
-    );
+  if (getAccountsResult.isLoading || getAccountsResult.isUninitialized || getAccountsResult.isFetching) {
+    return <div className={'container mx-auto py-16 bold text-center font-bold'}>{t('loading')}</div>;
   }
 
   if (getAccountsResult.error) {
     return (
       <div>
-        {t("accountsError")}: {getAccountsResult.error.toString()}
+        {t('accountsError')}: {getAccountsResult.error.toString()}
       </div>
     );
   }
 
   if (!getAccountsResult.data) {
-    return <div>{t("noAccountsData")}</div>;
+    return <div>{t('noAccountsData')}</div>;
   }
 
   const totalAccounts = getAccountsResult.data.total;
@@ -65,17 +57,14 @@ const AccountsList = () => {
     ...theme.table,
     root: {
       ...theme.table.root,
-      wrapper: twMerge(
-        theme.table.root.wrapper,
-        "border border-neutral-300 rounded-lg pb-2",
-      ),
+      wrapper: twMerge(theme.table.root.wrapper, 'border border-neutral-300 rounded-lg pb-2'),
     },
     head: {
       ...theme.table.head,
-      base: twMerge(theme.table.head.base, "text-base"),
+      base: twMerge(theme.table.head.base, 'text-base'),
       cell: {
         ...theme.table.head.cell,
-        base: twMerge(theme.table.head.cell.base, "bg-neutral-200"),
+        base: twMerge(theme.table.head.cell.base, 'bg-neutral-200'),
       },
     },
   };
@@ -119,10 +108,10 @@ const AccountsList = () => {
     try {
       await triggerDeleteAccount({ id: deletePopupSettings.account.id });
       closeDeleteAccountModal();
-      toast(t("account_deleted_successfully"), { type: "success" });
+      toast(t('account_deleted_successfully'), { type: 'success' });
     } catch (e) {
-      toast(t("failed_to_delete_account") + ": ${(e as Error).message}.", {
-        type: "error",
+      toast(t('failed_to_delete_account') + `: ${(e as Error).message}.`, {
+        type: 'error',
       });
     }
   };
@@ -134,13 +123,9 @@ const AccountsList = () => {
     try {
       const result = await triggerUpdateAccount({ id, name });
       closeEditAccountModal();
-      toastRTKQResponse(
-        t("account_updated_successfully"),
-        t("failed_to_update_account"),
-        result.error,
-      );
+      toastRTKQResponse(t('account_updated_successfully'), t('failed_to_update_account'), result.error);
     } catch (e) {
-      toastGenericError(t("failed_to_update_account"), e);
+      toastGenericError(t('failed_to_update_account'), e);
     }
   };
 
@@ -156,45 +141,38 @@ const AccountsList = () => {
         show={deletePopupSettings.open}
         onClose={closeDeleteAccountModal}
         onDelete={deleteAccount}
-        accountName={deletePopupSettings.account?.name ?? "Unknown"}
+        accountName={deletePopupSettings.account?.name ?? 'Unknown'}
       />
-      <h2 className={"text-lg font-bold pb-4"}>{t("accounts")}</h2>
-      <Table striped hoverable theme={accountsTableTheme}>
+      <h2 className={'text-lg font-bold pb-4'}>{t('accounts')}</h2>
+      <Table
+        striped
+        hoverable
+        theme={accountsTableTheme}>
         <Table.Head>
-          <Table.HeadCell>{t("account_name")}</Table.HeadCell>
-          <Table.HeadCell className={"text-right"}>
-            {t("actions")}
-          </Table.HeadCell>
+          <Table.HeadCell>{t('account_name')}</Table.HeadCell>
+          <Table.HeadCell className={'text-right'}>{t('actions')}</Table.HeadCell>
         </Table.Head>
         <Table.Body>
           {getAccountsResult.data.accounts.map((account) => (
             <Table.Row key={account.id}>
-              <Table.Cell className={""}>{account.name}</Table.Cell>
-              <Table.Cell
-                className={"flex flex-row flex-nowrap gap-2 justify-end"}
-              >
+              <Table.Cell className={''}>{account.name}</Table.Cell>
+              <Table.Cell className={'flex flex-row flex-nowrap gap-2 justify-end'}>
                 <Button
-                  color={"info"}
-                  size={"xs"}
-                  onClick={onEditAccountHandler(account)}
-                >
-                  <div
-                    className={"flex flex-row flex-nowrap gap-1 items-center"}
-                  >
+                  color={'info'}
+                  size={'xs'}
+                  onClick={onEditAccountHandler(account)}>
+                  <div className={'flex flex-row flex-nowrap gap-1 items-center'}>
                     <TbEdit />
-                    <span>{t("edit")}</span>
+                    <span>{t('edit')}</span>
                   </div>
                 </Button>
                 <Button
-                  color={"failure"}
-                  size={"xs"}
-                  onClick={onDeleteAccountHandler(account)}
-                >
-                  <div
-                    className={"flex flex-row flex-nowrap gap-1 items-center"}
-                  >
+                  color={'failure'}
+                  size={'xs'}
+                  onClick={onDeleteAccountHandler(account)}>
+                  <div className={'flex flex-row flex-nowrap gap-1 items-center'}>
                     <TbTrash />
-                    <span>{t("delete")}</span>
+                    <span>{t('delete')}</span>
                   </div>
                 </Button>
               </Table.Cell>
@@ -202,7 +180,7 @@ const AccountsList = () => {
           ))}
         </Table.Body>
       </Table>
-      <div className={"flex flex-col items-center justify-center"}>
+      <div className={'flex flex-col items-center justify-center'}>
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
@@ -210,22 +188,15 @@ const AccountsList = () => {
           showIcons
         />
         <div>
-          {t("showing_accounts")}{" "}
-          <span className={"font-bold"}>
-            {(page - 1) * DEFAULT_PAGE_SIZE + 1}
-          </span>{" "}
-          {t("to")}{" "}
-          <span className={"font-bold"}>{page * DEFAULT_PAGE_SIZE}</span>{" "}
-          {t("out_of")} <span className={"font-bold"}>{totalAccounts}</span>{" "}
-          {t("accountsLowercase")}{" "}
+          {t('showing_accounts')} <span className={'font-bold'}>{(page - 1) * DEFAULT_PAGE_SIZE + 1}</span> {t('to')}{' '}
+          <span className={'font-bold'}>{page * DEFAULT_PAGE_SIZE}</span> {t('out_of')}{' '}
+          <span className={'font-bold'}>{totalAccounts}</span> {t('accountsLowercase')}{' '}
         </div>
-        <div className={"flex flex-row flex-nowrap gap-2 items-center"}>
-          <span>{t("in_page")}</span>
+        <div className={'flex flex-row flex-nowrap gap-2 items-center'}>
+          <span>{t('in_page')}</span>
           <Select
             isSearchable={false}
-            onChange={(selected) => {
-              selected && setPage(selected.value as number);
-            }}
+            onChange={(selected) => selected && setPage(selected.value as number)}
             value={{ value: currentPage, label: currentPage }}
             options={range(totalPages).map((i) => ({
               value: i + 1,
@@ -233,8 +204,7 @@ const AccountsList = () => {
             }))}
           />
           <span>
-            {t("out_of")} <span className={"font-bold"}>{totalPages}</span>{" "}
-            {t("pages")}
+            {t('out_of')} <span className={'font-bold'}>{totalPages}</span> {t('pages')}
           </span>
         </div>
       </div>
