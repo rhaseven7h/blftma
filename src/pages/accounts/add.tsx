@@ -1,5 +1,4 @@
 import AccountCreate from '@/components/accounts/create';
-import AccountsList from '@/components/accounts/list';
 import DefaultLayout from '@/layouts/default';
 import { setSelectedMenuItem } from '@/store/features/applicationSlice';
 import NavbarMenuItems from '@/types/application';
@@ -15,23 +14,20 @@ export async function getStaticProps({ locale }: { locale: string }) {
   };
 }
 
-const AccountsPage = () => {
+const AccountsAddPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(setSelectedMenuItem(NavbarMenuItems.ACCOUNTS));
   }, [dispatch]);
   return (
     <DefaultLayout>
-      <div className={'flex flex-row flex-nowrap gap-4'}>
-        <div className={'grow-0 w-[28em] border p-4 rounded'}>
+      <div className={'flex flex-col flex-nowrap gap-4 w-full'}>
+        <div className={'grow-0 p-4 w-full'}>
           <AccountCreate />
-        </div>
-        <div className={'grow flex flex-col gap-4 border p-4 rounded'}>
-          <AccountsList />
         </div>
       </div>
     </DefaultLayout>
   );
 };
 
-export default AccountsPage;
+export default AccountsAddPage;

@@ -1,4 +1,4 @@
-import DefaultLayout from '@/layouts/default';
+import DefaultLayout from '@/layouts/default/index';
 import StoreWrapper from '@/util/testing/store-wrapper';
 import { render } from '@testing-library/react';
 
@@ -9,7 +9,7 @@ describe('DefaultLayout', () => {
         <DefaultLayout>
           <p>Page Content</p>
         </DefaultLayout>
-      </StoreWrapper>
+      </StoreWrapper>,
     );
     const linksParagraph = getByText('Page Content');
     expect(container).toMatchSnapshot();
