@@ -33,7 +33,7 @@ const DefaultLayout = ({
       />
       <div className={twMerge('flex flex-row flex-nowrap gap-4', className)}>
         <DefaultLayoutAppSidebar />
-        <main className={twMerge('ml-[320px] mt-[82px] mb-[69px] w-full overflow-auto', mainClassName)}>
+        <main className={twMerge('ml-[320px] mt-[82px] mb-[69px] w-full overflow-auto p-4', mainClassName)}>
           {children}
         </main>
       </div>

@@ -19,14 +19,30 @@ const DefaultLayoutAppSidebar = () => {
             icon={TbAlignBoxLeftTopFilled}
             label={'Accounts'}>
             <Sidebar.Item
+              href={'/accounts/add'}
+              icon={TbCategoryPlus}>
+              Add Account
+            </Sidebar.Item>
+            <Sidebar.Item
               href={'/accounts/list'}
               icon={TbListDetails}>
               List Accounts
             </Sidebar.Item>
+          </Sidebar.Collapse>
+          <Sidebar.Collapse
+            open={true}
+            href={'/projects'}
+            icon={TbAlignBoxLeftTopFilled}
+            label={'Projects'}>
             <Sidebar.Item
-              href={'/accounts/add'}
+              href={'/projects/add'}
               icon={TbCategoryPlus}>
-              Add Account
+              Add Project
+            </Sidebar.Item>
+            <Sidebar.Item
+              href={'/projects/list'}
+              icon={TbListDetails}>
+              List Projects
             </Sidebar.Item>
           </Sidebar.Collapse>
         </Sidebar.ItemGroup>

@@ -48,13 +48,13 @@ const DefaultLayoutAppNavBar = ({ navbarSelectedMenuItem, className }: DefaultLa
         </Navbar.Link>
         <Navbar.Link
           as={Link}
-          href='/accounts'
+          href='/accounts/list'
           active={navbarSelectedMenuItem === NavbarMenuItems.ACCOUNTS}>
           Accounts
         </Navbar.Link>
         <Navbar.Link
           as={Link}
-          href='/projects'
+          href='/projects/list'
           active={navbarSelectedMenuItem === NavbarMenuItems.PROJECTS}>
           Projects
         </Navbar.Link>

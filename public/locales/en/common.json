@@ -14,10 +14,18 @@
       "description": "This is the index page."
     },
     "accounts": {
+      "create": {
+      },
+      "list": {
+      }
     },
     "projects": {
-      "projects": "Projects",
-      "projects_associated_to_accounts": "Projects associated to accounts."
+      "create": {
+      },
+      "list": {
+        "projects": "Projects",
+        "projects_associated_to_accounts": "Projects associated to accounts."
+      }
     }
   },
   "components": {

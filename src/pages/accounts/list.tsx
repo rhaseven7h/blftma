@@ -21,10 +21,8 @@ const AccountsListPage = () => {
   }, [dispatch]);
   return (
     <DefaultLayout>
-      <div className={'flex flex-col flex-nowrap gap-4 w-full'}>
-        <div className={'grow p-4 w-full'}>
-          <AccountsList />
-        </div>
+      <div className={'w-full'}>
+        <AccountsList />
       </div>
     </DefaultLayout>
   );
