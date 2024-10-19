@@ -1,4 +1,4 @@
-import axiosInstance from '@/store/services/axios-instance';
+import { axiosInstance } from '@/store/services/axios-instance';
 import { BaseQueryArgs, BaseQueryError } from '@/types/base-query';
 import { BaseQueryFn } from '@reduxjs/toolkit/query/react';
 import { AxiosError, AxiosRequestConfig } from 'axios';
