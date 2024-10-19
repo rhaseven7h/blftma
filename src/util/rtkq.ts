@@ -1,21 +1,22 @@
+import { BaseQueryError } from '@/types/base-query';
 import { SerializedError } from '@reduxjs/toolkit';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { toast } from 'react-toastify';
 
 const getSerializedErrorInnerMessage = (
-  sError: SerializedError,
+  sError: SerializedError
 ): {
   name: string;
   message: string;
 } => {
   return {
     name: sError.name ?? 'Error',
-    message: sError.message ?? 'Unknown error',
+    message: sError.message ?? 'Unknown error'
   };
 };
 
 const getFetchBaseQueryErrorInnerMessage = (
-  fbqError: FetchBaseQueryError,
+  fbqError: FetchBaseQueryError
 ): {
   status: string;
   message: string;
@@ -33,7 +34,7 @@ const getFetchBaseQueryErrorInnerMessage = (
       };
       return {
         status: fbqError.status.toString(),
-        message: `(${customName}) ${customMessage}`,
+        message: `(${ customName }) ${ customMessage }`
       };
   }
 };
@@ -41,33 +42,33 @@ const getFetchBaseQueryErrorInnerMessage = (
 export const toastRTKQResponse = (
   successMessage: string,
   failureMessage: string,
-  error?: SerializedError | FetchBaseQueryError,
+  error?: SerializedError | BaseQueryError
 ) => {
   if (!error) {
     toast(successMessage, { type: 'success' });
   } else {
     const errorDetails = getRTKQErrorMessage(error, failureMessage);
-    const errorMessage = `${failureMessage} ${errorDetails}`;
+    const errorMessage = `${ failureMessage } ${ errorDetails }`;
     toast(errorMessage, { type: 'error' });
   }
 };
 
 export const toastGenericError = (baseMessage: string, error: unknown) => {
-  toast(`${baseMessage} ${JSON.stringify(error)}.`, {
-    type: 'error',
+  toast(`${ baseMessage } ${ JSON.stringify(error) }.`, {
+    type: 'error'
   });
 };
 
-export const getRTKQErrorMessage = (error: SerializedError | FetchBaseQueryError, baseMsg: string): string => {
+export const getRTKQErrorMessage = (error: SerializedError | BaseQueryError, baseMsg: string): string => {
   const fbqError = error as FetchBaseQueryError;
   const sError = error as SerializedError;
   if (fbqError.status) {
     const { status, message } = getFetchBaseQueryErrorInnerMessage(fbqError);
-    return `${baseMsg} (${status}) ${message}.`;
+    return `${ baseMsg } (${ status }) ${ message }.`;
   } else if (sError.message) {
     const { name, message } = getSerializedErrorInnerMessage(sError);
-    return `${baseMsg} ${name}: ${message}.`;
+    return `${ baseMsg } ${ name }: ${ message }.`;
   } else {
-    return `${baseMsg} Unknown error.`;
+    return `${ baseMsg } Unknown error.`;
   }
 };

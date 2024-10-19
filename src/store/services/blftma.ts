@@ -1,3 +1,4 @@
+import { axiosBaseQuery } from '@/store/services/base-query';
 import {
   Account,
   AccountsResult,
@@ -6,12 +7,13 @@ import {
   GetAccountsQueryArgs,
   UpdateAccountMutationArgs
 } from '@/types/accounts';
-import { createApi, FetchArgs, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { BaseQueryArgs } from '@/types/base-query';
+import { createApi } from '@reduxjs/toolkit/query/react';
 
 // Define a service using a base URL and expected endpoints
 const blftmaApi = createApi({
   reducerPath: 'blftmaApi',
-  baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
+  baseQuery: axiosBaseQuery({ baseUrl: '/api' }),
   tagTypes: [ 'Accounts' ],
   endpoints: (builder) => ({
     getAccounts: builder.query<AccountsResult, GetAccountsQueryArgs>({
@@ -20,7 +22,7 @@ const blftmaApi = createApi({
           url: `/accounts`,
           params: { q, page, size },
           method: 'GET'
-        }) as FetchArgs,
+        }) as BaseQueryArgs,
       providesTags: [ 'Accounts' ]
     }),
 
@@ -28,7 +30,7 @@ const blftmaApi = createApi({
       query: (body) => ({
         url: `/accounts`,
         method: 'POST',
-        body
+        data: body
       }),
       invalidatesTags: [ 'Accounts' ]
     }),
@@ -38,14 +40,14 @@ const blftmaApi = createApi({
         ({
           url: `/accounts/${ id }`,
           method: 'GET'
-        }) as FetchArgs
+        }) as BaseQueryArgs
     }),
 
     updateAccount: builder.mutation<Account, UpdateAccountMutationArgs>({
       query: ({ id, name }: UpdateAccountMutationArgs) => ({
         url: `/accounts/${ id }`,
         method: 'PATCH',
-        body: {
+        data: {
           name
         }
       }),
