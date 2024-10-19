@@ -1,10 +1,8 @@
 import DefaultLayout from '@/layouts/default';
-import { store } from '@/store/store';
+import StoreWrapper from '@/util/testing/store-wrapper';
 import { render } from '@testing-library/react';
-import { PropsWithChildren } from 'react';
-import { Provider } from 'react-redux';
 
-const mockFetchBaseQuery = jest.fn();
+const fetchBaseQueryMock = jest.fn();
 
 jest.mock('@reduxjs/toolkit/query/react', () => {
   const originalModule = jest.requireActual('@reduxjs/toolkit/query/react');
@@ -15,21 +13,16 @@ jest.mock('@reduxjs/toolkit/query/react', () => {
     fetchBaseQuery: () => jest
       .fn()
       .mockImplementation(
-        () => mockFetchBaseQuery
+        () => fetchBaseQueryMock()
       )
   };
 });
 
-const StoreWrapper = ({ children }: PropsWithChildren) => {
-  return (
-    <Provider store={ store }>
-      { children }
-    </Provider>
-  );
-};
-
 describe('DefaultLayout', () => {
   it('should render', () => {
+    fetchBaseQueryMock.mockReturnValueOnce({
+      data: 'data'
+    });
     const { getByText, container } = render(
       <StoreWrapper>
         <DefaultLayout>
