@@ -32,6 +32,9 @@ const projectsListHandler = async (req: NextApiRequest, res: NextApiResponse<Pro
     const total = await prisma.projects.count(count);
     const projects = await prisma.projects.findMany({
       ...list,
+      orderBy: {
+        name: 'asc'
+      },
       include: {
         account: true
       }

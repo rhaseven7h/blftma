@@ -6,10 +6,12 @@ import { DEFAULT_PAGE_SIZE } from '@/constants/common';
 import blftmaApi from '@/store/services/blftma';
 import { Project, ProjectAddFormValues } from '@/types/projects';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { getCoreRowModel, TableOptions, useReactTable } from '@tanstack/react-table';
-import { Button, Label, Modal, Select, TextInput } from 'flowbite-react';
-import { useMemo, useRef, useState } from 'react';
+import { getCoreRowModel, PaginationState, TableOptions, useReactTable } from '@tanstack/react-table';
+import { Button, Label, Modal, Pagination, Select, TextInput } from 'flowbite-react';
+import { range } from 'lodash';
+import { ChangeEvent, useMemo, useRef, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { TbPlus } from 'react-icons/tb';
 import { z } from 'zod';
 
 const schema = z.object({
@@ -190,21 +192,31 @@ const AddProjectModal = ({ show, closeModal, onSave }: AddNewProjectModalProps) 
 };
 
 const ProjectsList = () => {
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: DEFAULT_PAGE_SIZE
+  });
   const projectsResult = blftmaApi.useGetProjectsQuery({
     q: undefined,
-    page: 1,
+    page: pagination.pageIndex + 1,
     size: DEFAULT_PAGE_SIZE
   });
   const columns = useMemo(() => projectListColumns, []);
   const data = projectsResult.data?.projects || [];
   const coreRowModel = getCoreRowModel<Project>();
+  const [showAddProjectModal, setShowAddProjectModal] = useState(false);
   const options: TableOptions<Project> = {
+    getCoreRowModel: coreRowModel,
     columns,
     data,
-    getCoreRowModel: coreRowModel
+    rowCount: projectsResult.data?.total || 0,
+    state: {
+      pagination
+    },
+    onPaginationChange: setPagination,
+    manualPagination: true
   };
   const table = useReactTable<Project>(options);
-  const [showAddProjectModal, setShowAddProjectModal] = useState(false);
 
   if (projectsResult.isLoading || projectsResult.isFetching || projectsResult.isUninitialized) {
     return <Loading />;
@@ -223,12 +235,44 @@ const ProjectsList = () => {
       />
       <div className={'w-full max-w-none prose'}>
         <h1>Projects List</h1>
-        <Button
-          size={'xs'}
-          onClick={() => setShowAddProjectModal(true)}>
-          Add Project
-        </Button>
         <ApplicationTable table={table} />
+      </div>
+      <div className={'flex flex-col flex-nowrap items-center'}>
+        <Pagination
+          currentPage={table.getState().pagination.pageIndex + 1}
+          totalPages={table.getPageCount()}
+          onPageChange={(page) => table.setPageIndex(page - 1)}
+          showIcons
+        />
+        <div className={'mt-2'}>
+          Showing page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()} total pages.
+        </div>
+        <div className={'flex flex-row flex-nowrap gap-2 items-center mt-2'}>
+          <span>Go to page: </span>
+          <Select
+            value={table.getState().pagination.pageIndex + 1}
+            onChange={(selected: ChangeEvent<HTMLSelectElement>) => {
+              if (selected) table.setPageIndex(parseInt(selected.currentTarget.value) - 1);
+            }}>
+            {range(1, table.getPageCount() + 1).map((page) => (
+              <option
+                key={page}
+                value={page}>
+                {page}
+              </option>
+            ))}
+          </Select>
+        </div>
+        <Button
+          className={'mt-4'}
+          color={'success'}
+          size={'sm'}
+          onClick={() => setShowAddProjectModal(true)}>
+          <div className={'flex flex-row flex-nowrap gap-2 items-center px-8'}>
+            <TbPlus />
+            <span>Add Project</span>
+          </div>
+        </Button>
       </div>
     </>
   );
