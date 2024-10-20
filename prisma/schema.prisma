@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
 }
 
 datasource db {
@@ -9,8 +10,9 @@ datasource db {
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model accounts {
-  id   Int    @id(map: "accounts_pk") @default(autoincrement())
-  name String @unique(map: "accounts_name_uindex") @db.VarChar(128)
+  id       Int        @id(map: "accounts_pk") @default(autoincrement())
+  name     String     @unique(map: "accounts_name_uindex") @db.VarChar(128)
+  projects projects[] @relation("projects_accounts_id_fk")
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -30,9 +32,10 @@ model assessments {
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model projects {
-  id          Int    @id(map: "projects_pk") @default(autoincrement())
+  id          Int      @id(map: "projects_pk") @default(autoincrement())
+  account     accounts @relation("projects_accounts_id_fk", fields: [account_id], references: [id])
   account_id  Int
-  name        String @unique(map: "projects_name_uindex") @db.VarChar(128)
-  owner_name  String @db.VarChar(128)
-  owner_email String @db.VarChar(128)
+  name        String   @unique(map: "projects_name_uindex") @db.VarChar(128)
+  owner_name  String   @db.VarChar(128)
+  owner_email String   @db.VarChar(128)
 }

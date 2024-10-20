@@ -1,103 +1,40 @@
-import { createColumnHelper, flexRender, getCoreRowModel, TableOptions, useReactTable } from '@tanstack/react-table';
-import { Table } from 'flowbite-react';
-import { useMemo, useState } from 'react';
-
-type User = {
-  firstName: string;
-  lastName: string;
-  age: number;
-  visits: number;
-  progress: number;
-  status: string;
-};
-
-const sourceData: User[] = [
-  {
-    firstName: 'Tanner',
-    lastName: 'Linsley',
-    age: 33,
-    visits: 100,
-    progress: 50,
-    status: 'Married'
-  },
-  {
-    firstName: 'Kevin',
-    lastName: 'Vandy',
-    age: 27,
-    visits: 200,
-    progress: 100,
-    status: 'Single'
-  }
-];
-
-const columnHelper = createColumnHelper<User>();
-
-const sourceColumns = [
-  columnHelper.accessor('firstName', {
-    id: 'firstName',
-    cell: (info) => info.getValue(),
-    header: 'First Name',
-    footer: 'First Name'
-  }),
-  columnHelper.accessor('lastName', {
-    id: 'lastName',
-    cell: (info) => info.getValue(),
-    header: 'Last Name',
-    footer: 'Last Name'
-  }),
-  columnHelper.accessor('age', {
-    id: 'age',
-    cell: (info) => info.getValue(),
-    header: 'Age',
-    footer: 'Age'
-  }),
-  columnHelper.accessor('visits', {
-    id: 'visits',
-    cell: (info) => info.getValue(),
-    header: 'Visits',
-    footer: 'Visits'
-  }),
-  columnHelper.accessor('progress', {
-    id: 'progress',
-    cell: (info) => info.getValue(),
-    header: 'Progress',
-    footer: 'Progress'
-  }),
-  columnHelper.accessor('status', {
-    id: 'status',
-    cell: (info) => info.getValue(),
-    header: 'Status',
-    footer: 'Status'
-  })
-];
+import ApplicationTable from '@/components/application-table';
+import { ErrorMessage } from '@/components/common/error-message';
+import { Loading } from '@/components/common/loading';
+import { projectListColumns } from '@/components/projects/columns';
+import blftmaApi from '@/store/services/blftma';
+import { Project } from '@/types/projects';
+import { getCoreRowModel, TableOptions, useReactTable } from '@tanstack/react-table';
+import { useMemo } from 'react';
 
 const ProjectsList = () => {
-  const columns = useMemo(() => sourceColumns, []);
-  const [data] = useState<User[]>(sourceData);
-  const coreRowModel = getCoreRowModel<User>();
-  const options: TableOptions<User> = {
+  const projectsResult = blftmaApi.useGetProjectsQuery({
+    q: undefined,
+    page: 1,
+    size: 10
+  });
+  const columns = useMemo(() => projectListColumns, []);
+  const data = projectsResult.data?.projects || [];
+  const coreRowModel = getCoreRowModel<Project>();
+  const options: TableOptions<Project> = {
     columns,
     data,
     getCoreRowModel: coreRowModel
   };
-  const table = useReactTable(options);
+  const table = useReactTable<Project>(options);
+
+  if (projectsResult.isLoading || projectsResult.isFetching || projectsResult.isUninitialized) {
+    return <Loading />;
+  }
+
+  if (projectsResult.isError) {
+    return <ErrorMessage error={projectsResult.error} />;
+  }
 
   return (
     <div className={'w-full max-w-none prose'}>
       <h1>Projects List</h1>
-      <Table>
-        <Table.Head>
-          {table
-            .getHeaderGroups()
-            .map((headerGroup) =>
-              headerGroup.headers.map((header) => (
-                <Table.HeadCell key={header.id}>
-                  {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                </Table.HeadCell>
-              ))
-            )}
-        </Table.Head>
-      </Table>
+      <ApplicationTable table={table} />
     </div>
   );
 };
