@@ -2,8 +2,9 @@ import ApplicationTable from '@/components/application-table';
 import { ErrorMessage } from '@/components/common/error-message';
 import { Loading } from '@/components/common/loading';
 import { projectListColumns } from '@/components/projects/columns';
+import { DEFAULT_PAGE_SIZE } from '@/constants/common';
 import blftmaApi from '@/store/services/blftma';
-import { Project } from '@/types/projects';
+import { Project, ProjectAddFormValues } from '@/types/projects';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { getCoreRowModel, TableOptions, useReactTable } from '@tanstack/react-table';
 import { Button, Label, Modal, Select, TextInput } from 'flowbite-react';
@@ -18,16 +19,14 @@ const schema = z.object({
   owner_email: z.string().email().min(3).max(128).trim()
 });
 
-type ProjectFormValues = z.infer<typeof schema>;
-
 type AddNewProjectModalProps = {
   show?: boolean;
   closeModal: () => void;
-  onSave: (values: ProjectFormValues) => void;
+  onSave: (values: ProjectAddFormValues) => void;
 };
 
 const AddProjectModal = ({ show, closeModal, onSave }: AddNewProjectModalProps) => {
-  const { control, handleSubmit, reset } = useForm<ProjectFormValues>({
+  const { control, handleSubmit, reset } = useForm<ProjectAddFormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
       name: '',
@@ -38,8 +37,7 @@ const AddProjectModal = ({ show, closeModal, onSave }: AddNewProjectModalProps) 
   });
   const nameFieldRef = useRef<HTMLInputElement>(null);
 
-  const onSubmit: SubmitHandler<ProjectFormValues> = async (values: ProjectFormValues) => {
-    console.log('Form values:', values);
+  const onSubmit: SubmitHandler<ProjectAddFormValues> = async (values: ProjectAddFormValues) => {
     onSave(values);
     reset();
     closeModal();
@@ -195,7 +193,7 @@ const ProjectsList = () => {
   const projectsResult = blftmaApi.useGetProjectsQuery({
     q: undefined,
     page: 1,
-    size: 10
+    size: DEFAULT_PAGE_SIZE
   });
   const columns = useMemo(() => projectListColumns, []);
   const data = projectsResult.data?.projects || [];
@@ -221,7 +219,7 @@ const ProjectsList = () => {
       <AddProjectModal
         show={showAddProjectModal}
         closeModal={() => setShowAddProjectModal(false)}
-        onSave={(values: ProjectFormValues) => console.log('(onSave) Add project:', values)}
+        onSave={(values: ProjectAddFormValues) => console.log('(onSave) Add project:', values)}
       />
       <div className={'w-full max-w-none prose'}>
         <h1>Projects List</h1>

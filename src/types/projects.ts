@@ -26,3 +26,10 @@ export interface GetProjectsQueryArgs {
   page?: number;
   size?: number;
 }
+
+export type ProjectAddFormValues = {
+  name: string;
+  account_id: number;
+  owner_name: string;
+  owner_email: string;
+};
