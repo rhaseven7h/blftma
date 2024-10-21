@@ -1,5 +1,5 @@
 import { Sidebar } from 'flowbite-react';
-import { TbAlignBoxLeftTopFilled, TbCategoryPlus, TbListDetails } from 'react-icons/tb';
+import { TbAlignBoxLeftTopFilled, TbCategoryPlus, TbCube, TbListDetails } from 'react-icons/tb';
 
 const DefaultLayoutAppSidebar = () => {
   return (
@@ -29,22 +29,11 @@ const DefaultLayoutAppSidebar = () => {
               List Accounts
             </Sidebar.Item>
           </Sidebar.Collapse>
-          <Sidebar.Collapse
-            open={true}
+          <Sidebar.Item
             href={'/projects'}
-            icon={TbAlignBoxLeftTopFilled}
-            label={'Projects'}>
-            <Sidebar.Item
-              href={'/projects/add'}
-              icon={TbCategoryPlus}>
-              Add Project
-            </Sidebar.Item>
-            <Sidebar.Item
-              href={'/projects/list'}
-              icon={TbListDetails}>
-              List Projects
-            </Sidebar.Item>
-          </Sidebar.Collapse>
+            icon={TbCube}>
+            Projects
+          </Sidebar.Item>
         </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>

@@ -1,4 +1,4 @@
-import ProjectCreate from '@/components/projects/add';
+import ProjectsList from '@/components/projects';
 import DefaultLayout from '@/layouts/default';
 import { setSelectedMenuItem } from '@/store/features/applicationSlice';
 import NavbarMenuItems from '@/types/application';
@@ -14,7 +14,7 @@ export async function getStaticProps({ locale }: { locale: string }) {
   };
 }
 
-const ProjectAddPage = () => {
+const ProjectsListPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(setSelectedMenuItem(NavbarMenuItems.PROJECTS));
@@ -23,10 +23,10 @@ const ProjectAddPage = () => {
   return (
     <DefaultLayout>
       <div className={'w-full'}>
-        <ProjectCreate />
+        <ProjectsList />
       </div>
     </DefaultLayout>
   );
 };
 
-export default ProjectAddPage;
+export default ProjectsListPage;

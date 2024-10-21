@@ -8,7 +8,7 @@ import {
   UpdateAccountMutationArgs
 } from '@/types/accounts';
 import { BaseQueryArgs } from '@/types/base-query';
-import { GetProjectsQueryArgs, Projects, ProjectsResult } from '@/types/projects';
+import { Projects } from '@/types/projects';
 import { createApi } from '@reduxjs/toolkit/query/react';
 
 // Define a service using a base URL and expected endpoints
@@ -63,23 +63,13 @@ const blftmaApi = createApi({
       invalidatesTags: ['Accounts']
     }),
 
-    getProjects: builder.query<ProjectsResult, GetProjectsQueryArgs>({
-      query: ({ q, page, size }: GetProjectsQueryArgs) =>
-        ({
-          url: `/projects`,
-          params: { q, page, size },
-          method: 'GET'
-        }) as BaseQueryArgs,
-      providesTags: ['Projects']
-    }),
-
-    getProjects2: builder.query<Projects, void>({
+    getProjects: builder.query<Projects, void>({
       query: () =>
         ({
           url: `/projects`,
           method: 'GET'
         }) as BaseQueryArgs,
-      providesTags: ['Projects2']
+      providesTags: ['Projects']
     })
   })
 });
