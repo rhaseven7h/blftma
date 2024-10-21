@@ -12,11 +12,11 @@ export type DefaultLayoutAppNavBarProps = {
 const DefaultLayoutAppNavBar = ({ navbarSelectedMenuItem, className }: DefaultLayoutAppNavBarProps) => {
   const navbarTheme = {
     root: {
-      base: twMerge(theme.navbar.root.base, 'bg-neutral-50 border-b border-b-neutral-200'),
+      base: twMerge(theme.navbar.root.base, 'bg-neutral-50 border-b border-b-neutral-200')
     },
     link: {
-      base: twMerge(theme.navbar.link.base, 'text-base uppercase'),
-    },
+      base: twMerge(theme.navbar.link.base, 'text-base uppercase')
+    }
   };
 
   return (
@@ -54,7 +54,7 @@ const DefaultLayoutAppNavBar = ({ navbarSelectedMenuItem, className }: DefaultLa
         </Navbar.Link>
         <Navbar.Link
           as={Link}
-          href='/projects/list'
+          href='/projects'
           active={navbarSelectedMenuItem === NavbarMenuItems.PROJECTS}>
           Projects
         </Navbar.Link>
