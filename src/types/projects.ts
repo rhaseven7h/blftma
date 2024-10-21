@@ -1,5 +1,4 @@
 import { Account } from '@/types/accounts';
-import { ApiError } from '@/types/application';
 
 export type Project = {
   id: number;
@@ -12,11 +11,12 @@ export type Project = {
 
 export type Projects = Project[];
 
-export type ProjectsResponse = Projects | ApiError;
+export type ProjectFormValues = Omit<Project, 'id' | 'account'>;
 
-export type ProjectAddFormValues = {
-  name: string;
-  account_id: number;
-  owner_name: string;
-  owner_email: string;
-};
+export type GetProjectQueryArgs = Pick<Project, 'id'>;
+
+export type CreateProjectMutationArgs = Omit<Project, 'id' | 'account'>;
+
+export type UpdateProjectMutationArgs = Omit<Project, 'account'>;
+
+export type DeleteProjectMutationArgs = Pick<Project, 'id'>;

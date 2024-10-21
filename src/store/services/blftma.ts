@@ -1,12 +1,13 @@
 import { axiosBaseQuery } from '@/store/services/base-query';
 import {
   Account,
-  AccountsResult,
+  Accounts,
+  CreateAccountMutationArgs,
   DeleteAccountMutationArgs,
   GetAccountQueryArgs,
-  GetAccountsQueryArgs,
   UpdateAccountMutationArgs
 } from '@/types/accounts';
+import { ApiError } from '@/types/application';
 import { BaseQueryArgs } from '@/types/base-query';
 import { Projects } from '@/types/projects';
 import { createApi } from '@reduxjs/toolkit/query/react';
@@ -17,17 +18,24 @@ const blftmaApi = createApi({
   baseQuery: axiosBaseQuery({ baseUrl: '/api' }),
   tagTypes: ['Accounts', 'Projects', 'Projects2'],
   endpoints: (builder) => ({
-    getAccounts: builder.query<AccountsResult, GetAccountsQueryArgs>({
-      query: ({ q, page, size }: GetAccountsQueryArgs) =>
+    getAccounts: builder.query<Accounts | ApiError, void>({
+      query: () =>
         ({
           url: `/accounts`,
-          params: { q, page, size },
           method: 'GET'
         }) as BaseQueryArgs,
       providesTags: ['Accounts']
     }),
 
-    createAccount: builder.mutation<Account, Omit<Account, 'id'>>({
+    getAccount: builder.query<Account | ApiError, GetAccountQueryArgs>({
+      query: ({ id }: GetAccountQueryArgs) =>
+        ({
+          url: `/accounts/${id}`,
+          method: 'GET'
+        }) as BaseQueryArgs
+    }),
+
+    createAccount: builder.mutation<Account | ApiError, CreateAccountMutationArgs>({
       query: (body) => ({
         url: `/accounts`,
         method: 'POST',
@@ -36,15 +44,7 @@ const blftmaApi = createApi({
       invalidatesTags: ['Accounts']
     }),
 
-    getAccount: builder.query<AccountsResult, GetAccountQueryArgs>({
-      query: ({ id }: GetAccountQueryArgs) =>
-        ({
-          url: `/accounts/${id}`,
-          method: 'GET'
-        }) as BaseQueryArgs
-    }),
-
-    updateAccount: builder.mutation<Account, UpdateAccountMutationArgs>({
+    updateAccount: builder.mutation<Account | ApiError, UpdateAccountMutationArgs>({
       query: ({ id, name }: UpdateAccountMutationArgs) => ({
         url: `/accounts/${id}`,
         method: 'PATCH',
@@ -55,7 +55,7 @@ const blftmaApi = createApi({
       invalidatesTags: ['Accounts']
     }),
 
-    deleteAccount: builder.mutation<Account, DeleteAccountMutationArgs>({
+    deleteAccount: builder.mutation<ApiError | void, DeleteAccountMutationArgs>({
       query: ({ id }: DeleteAccountMutationArgs) => ({
         url: `/accounts/${id}`,
         method: 'DELETE'
@@ -63,7 +63,7 @@ const blftmaApi = createApi({
       invalidatesTags: ['Accounts']
     }),
 
-    getProjects: builder.query<Projects, void>({
+    getProjects: builder.query<Projects | ApiError, void>({
       query: () =>
         ({
           url: `/projects`,

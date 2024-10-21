@@ -5,30 +5,12 @@ export type Account = {
 
 export type Accounts = Account[];
 
-export type AccountsResult = {
-  accounts: Accounts;
-  total: number;
-  page: number;
-  size: number;
-};
+export type AccountFormValues = Omit<Account, 'id'>;
 
-export type AccountsResponse = AccountsResult | Error;
+export type GetAccountQueryArgs = Pick<Account, 'id'>;
 
-export interface GetAccountsQueryArgs {
-  q?: string;
-  page?: number;
-  size?: number;
-}
+export type CreateAccountMutationArgs = Omit<Account, 'id'>;
 
-export interface GetAccountQueryArgs {
-  id: number;
-}
+export type UpdateAccountMutationArgs = Account;
 
-export interface UpdateAccountMutationArgs {
-  id: number;
-  name: string;
-}
-
-export interface DeleteAccountMutationArgs {
-  id: number;
-}
+export type DeleteAccountMutationArgs = Pick<Account, 'id'>;

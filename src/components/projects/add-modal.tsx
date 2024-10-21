@@ -1,4 +1,4 @@
-import { ProjectAddFormValues } from '@/types/projects';
+import { ProjectFormValues } from '@/types/projects';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Label, Modal, Select, TextInput } from 'flowbite-react';
 import { noop } from 'lodash';
@@ -19,7 +19,7 @@ type AddNewProjectModalProps = {
 };
 
 const AddProjectModal = ({ show, closeModal }: AddNewProjectModalProps) => {
-  const { control, handleSubmit, reset } = useForm<ProjectAddFormValues>({
+  const { control, handleSubmit, reset } = useForm<ProjectFormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
       name: '',
@@ -30,7 +30,7 @@ const AddProjectModal = ({ show, closeModal }: AddNewProjectModalProps) => {
   });
   const nameFieldRef = useRef<HTMLInputElement>(null);
 
-  const onSubmit: SubmitHandler<ProjectAddFormValues> = async (values: ProjectAddFormValues) => {
+  const onSubmit: SubmitHandler<ProjectFormValues> = async (values: ProjectFormValues) => {
     // TODO: Save the project to the database
     noop(values);
     reset();

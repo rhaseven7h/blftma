@@ -1,15 +1,16 @@
+import { MAX_FETCH_LIST_LIMIT } from '@/constants/common';
 import { ApiError } from '@/types/application';
-import { Projects, ProjectsResponse } from '@/types/projects';
+import { Projects } from '@/types/projects';
 import { getApiErrorElements } from '@/util/api';
 import { PrismaClient } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 const prisma = new PrismaClient();
 
-const projectsListHandler = async (_req: NextApiRequest, res: NextApiResponse<Projects | ApiError>) => {
+const getProjectsHandler = async (_req: NextApiRequest, res: NextApiResponse<Projects | ApiError>) => {
   try {
     const accounts = await prisma.projects.findMany({
-      take: 1000,
+      take: MAX_FETCH_LIST_LIMIT,
       include: {
         account: true
       }
@@ -21,12 +22,18 @@ const projectsListHandler = async (_req: NextApiRequest, res: NextApiResponse<Pr
   }
 };
 
-const handler = (req: NextApiRequest, res: NextApiResponse<ProjectsResponse | Projects>) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse<Projects | ApiError>) => {
   switch (req.method) {
     case 'GET':
-      return projectsListHandler(req, res);
+      await getProjectsHandler(req, res);
+      break;
     default:
-      return res.status(405).end();
+      res.setHeader('Allow', ['GET']);
+      res.status(405).json({
+        code: '304bc181-37b7-4450-afbd-6b717a3b2656',
+        name: 'method-not-allowed',
+        message: `Method ${req.method} Not Allowed`
+      });
   }
 };
 

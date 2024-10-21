@@ -13,7 +13,7 @@ import {
   useReactTable
 } from '@tanstack/react-table';
 import cn from 'classnames';
-import { Dropdown, Pagination, Table } from 'flowbite-react';
+import { Pagination, Select, Table } from 'flowbite-react';
 import { range } from 'lodash';
 import { TbSortAscending, TbSortDescending } from 'react-icons/tb';
 
@@ -121,18 +121,19 @@ const ProjectsListTable = () => {
         </div>
         <div className={'flex flex-row flex-nowrap gap-2 items-center'}>
           <span>Go to page</span>
-          <Dropdown
-            label={<span className={'font-bold'}>{table.getState().pagination.pageIndex + 1}</span>}
-            dismissOnClick
-            inline>
-            {range(1, table.getPageCount() + 1).map((page) => (
-              <Dropdown.Item
+          <Select
+            value={table.getState().pagination.pageIndex}
+            onChange={(e) => {
+              table.setPageIndex(parseInt(e.target.value));
+            }}>
+            {range(table.getPageCount()).map((page) => (
+              <option
                 key={page}
-                onClick={() => table.setPageIndex(page - 1)}>
-                {page}
-              </Dropdown.Item>
+                value={page}>
+                {page + 1}
+              </option>
             ))}
-          </Dropdown>
+          </Select>
         </div>
       </div>
     </>

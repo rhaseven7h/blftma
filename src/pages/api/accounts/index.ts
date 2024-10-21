@@ -1,81 +1,26 @@
-import { Account, Accounts, AccountsResponse } from '@/types/accounts';
-import { Prisma, PrismaClient } from '@prisma/client';
+import { MAX_FETCH_LIST_LIMIT } from '@/constants/common';
+import { Account, Accounts } from '@/types/accounts';
+import { ApiError } from '@/types/application';
+import { getApiErrorElements } from '@/util/api';
+import { PrismaClient } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { z } from 'zod';
 
 const prisma = new PrismaClient();
 
-const getAccounts = async (req: NextApiRequest, res: NextApiResponse<AccountsResponse>) => {
-  const getAccountsSchema = z.object({
-    q: z.string().min(3).max(100).optional(),
-    page: z.coerce.number().min(1).default(1),
-    size: z.coerce.number().min(1).max(1000).default(10)
-  });
-  const validatedParams = getAccountsSchema.safeParse(req.query);
-
-  if (!validatedParams.success) {
-    res.status(400).json({
-      name: 'invalid-parameters',
-      message: validatedParams.error.issues.map((issue) => `${issue.path.join('.')}: ${issue.message}`).join(', ')
-    });
-    return;
-  }
-
-  let accounts: Accounts = [];
-  let total: number = -1;
-
+const getAccountsHandler = async (_req: NextApiRequest, res: NextApiResponse<Accounts | ApiError>) => {
   try {
-    accounts = await prisma.accounts.findMany({
-      where: {
-        name: {
-          contains: validatedParams.data.q,
-          mode: 'insensitive'
-        }
-      },
-      orderBy: {
-        name: 'asc'
-      },
-      skip: (validatedParams.data.page - 1) * validatedParams.data.size,
-      take: validatedParams.data.size
+    const accounts = await prisma.accounts.findMany({
+      take: MAX_FETCH_LIST_LIMIT
     });
-
-    total = await prisma.accounts.count({
-      where: {
-        name: {
-          contains: validatedParams.data.q,
-          mode: 'insensitive'
-        }
-      }
-    });
-
-    const result = {
-      accounts,
-      total,
-      page: validatedParams.data.page,
-      size: validatedParams.data.size
-    };
-
-    res.status(200).json(result);
-  } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      switch (e.code) {
-        default:
-          res.status(500).json({
-            name: 'prisma-error',
-            message: `${e.code}: ${e.message}`
-          });
-          break;
-      }
-    } else {
-      res.status(500).json({
-        name: 'internal-server-error',
-        message: 'An unexpected error occurred'
-      });
-    }
+    res.status(200).json(accounts);
+  } catch (error) {
+    const { name, message } = getApiErrorElements(error);
+    res.status(500).json({ code: 'b323ae3d-9874-4675-b292-56b58871849f', name, message } as ApiError);
   }
 };
 
-const createAccount = async (req: NextApiRequest, res: NextApiResponse<Account | Error>) => {
+const createAccountHandler = async (req: NextApiRequest, res: NextApiResponse<Account | ApiError>) => {
   const createAccountSchema = z.object({
     name: z.string().min(1).max(128).trim()
   });
@@ -83,6 +28,7 @@ const createAccount = async (req: NextApiRequest, res: NextApiResponse<Account |
 
   if (!validatedBody.success) {
     res.status(400).json({
+      code: '2902c293-9b62-4964-8791-3ba6042c042a',
       name: 'invalid-parameters',
       message: validatedBody.error.issues.map((issue) => `${issue.path.join('.')}: ${issue.message}`).join(', ')
     });
@@ -96,43 +42,28 @@ const createAccount = async (req: NextApiRequest, res: NextApiResponse<Account |
       }
     });
     res.status(201).json(account);
-  } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      switch (e.code) {
-        case 'P2002':
-          res.status(400).json({
-            name: 'already-exists',
-            message: 'An account with the same name already exists'
-          });
-          break;
-        default:
-          res.status(500).json({
-            name: 'prisma-error',
-            message: `${e.code}: ${e.message}`
-          });
-          break;
-      }
-    } else {
-      res.status(500).json({
-        name: 'internal-server-error',
-        message: 'An unexpected error occurred'
-      });
-    }
+  } catch (error) {
+    const { name, message } = getApiErrorElements(error);
+    res.status(500).json({ code: '577cb235-63dd-42c1-aef3-54551c96c687', name, message } as ApiError);
   }
 };
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<AccountsResponse | Account>) {
+const handler = async (req: NextApiRequest, res: NextApiResponse<Accounts | Account | ApiError>) => {
   switch (req.method) {
     case 'GET':
-      await getAccounts(req, res);
+      await getAccountsHandler(req, res);
       break;
     case 'POST':
-      await createAccount(req, res);
+      await createAccountHandler(req, res);
       break;
     default:
+      res.setHeader('Allow', ['GET', 'POST']);
       res.status(405).json({
+        code: '45d2c1fa-9516-4486-8280-caf0cacf7c9e',
         name: 'method-not-allowed',
-        message: 'Method Not Allowed'
+        message: `Method ${req.method} Not Allowed`
       });
   }
-}
+};
+
+export default handler;
