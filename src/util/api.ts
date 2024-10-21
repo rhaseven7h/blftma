@@ -22,24 +22,47 @@ export const getApiErrorElements = (error: unknown): { name: string; message: st
   }
 };
 
-export const getApiListRequestArgs = (q: string | undefined, page: number, size: number) => {
-  const where = {
+interface getApiListRequestArgsProps {
+  q: string | undefined;
+  page: number;
+  size: number;
+  sort?: string[];
+  include: { [key: string]: boolean };
+}
+
+export const getApiListRequestArgs = ({ q, page, size, sort, include }: getApiListRequestArgsProps) => {
+  const orderBy = (sort ?? []).map((s) => {
+    const [field, order] = s.split(':');
+    if (field.includes('.')) {
+      const [relation, subField] = field.split('.');
+      return {
+        [relation]: {
+          [subField]: order
+        }
+      };
+    } else {
+      return {
+        [field]: order
+      };
+    }
+  });
+  const count = {
     where: {
       name: {
         contains: q
       }
     }
   };
-  const paging = {
+  const list = {
+    ...count,
+    orderBy,
+    include,
     take: size,
     skip: (page - 1) * size
   };
   return {
-    list: {
-      ...where,
-      ...paging
-    },
-    count: where
+    list,
+    count
   };
 };
 

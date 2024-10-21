@@ -13,15 +13,32 @@ const ApplicationTable = <T,>({ table }: ApplicationTableProps<T>) => {
       hoverable
       striped>
       <Table.Head>
-        {table
-          .getHeaderGroups()
-          .map((headerGroup) =>
-            headerGroup.headers.map((header) => (
-              <Table.HeadCell key={header.id}>
-                {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-              </Table.HeadCell>
-            ))
-          )}
+        {table.getHeaderGroups().map((headerGroup) =>
+          headerGroup.headers.map((header) => (
+            <Table.HeadCell key={header.id}>
+              {header.isPlaceholder ? null : (
+                <div
+                  className={header.column.getCanSort() ? 'cursor-pointer select-none' : ''}
+                  onClick={header.column.getToggleSortingHandler()}
+                  title={
+                    header.column.getCanSort()
+                      ? header.column.getNextSortingOrder() === 'asc'
+                        ? 'Sort ascending'
+                        : header.column.getNextSortingOrder() === 'desc'
+                          ? 'Sort descending'
+                          : 'Clear sort'
+                      : undefined
+                  }>
+                  {flexRender(header.column.columnDef.header, header.getContext())}
+                  {{
+                    asc: ' 🔼',
+                    desc: ' 🔽'
+                  }[header.column.getIsSorted() as string] ?? null}
+                </div>
+              )}
+            </Table.HeadCell>
+          ))
+        )}
       </Table.Head>
       <Table.Body>
         {table.getRowModel().rows.map((row) => (

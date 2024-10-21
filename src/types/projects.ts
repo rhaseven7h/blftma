@@ -3,7 +3,7 @@ import { ApiError } from '@/types/application';
 
 export type Project = {
   id: number;
-  account: Account;
+  account?: Account;
   account_id: number;
   name: string;
   owner_name: string;
@@ -25,6 +25,7 @@ export interface GetProjectsQueryArgs {
   q?: string;
   page?: number;
   size?: number;
+  sort?: string[];
 }
 
 export type ProjectAddFormValues = {

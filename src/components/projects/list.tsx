@@ -6,7 +6,14 @@ import { DEFAULT_PAGE_SIZE } from '@/constants/common';
 import blftmaApi from '@/store/services/blftma';
 import { Project, ProjectAddFormValues } from '@/types/projects';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { getCoreRowModel, PaginationState, TableOptions, useReactTable } from '@tanstack/react-table';
+import {
+  getCoreRowModel,
+  getSortedRowModel,
+  PaginationState,
+  SortingState,
+  TableOptions,
+  useReactTable
+} from '@tanstack/react-table';
 import { Button, Label, Modal, Pagination, Select, TextInput } from 'flowbite-react';
 import { range } from 'lodash';
 import { ChangeEvent, useMemo, useRef, useState } from 'react';
@@ -192,29 +199,37 @@ const AddProjectModal = ({ show, closeModal, onSave }: AddNewProjectModalProps) 
 };
 
 const ProjectsList = () => {
+  const [sorting, setSorting] = useState<SortingState>([]);
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: DEFAULT_PAGE_SIZE
   });
+  const sortingParam = sorting.map((s) => `${s.id}:${s.desc ? 'desc' : 'asc'}`);
   const projectsResult = blftmaApi.useGetProjectsQuery({
     q: undefined,
     page: pagination.pageIndex + 1,
-    size: DEFAULT_PAGE_SIZE
+    size: DEFAULT_PAGE_SIZE,
+    sort: sortingParam
   });
   const columns = useMemo(() => projectListColumns, []);
   const data = projectsResult.data?.projects || [];
   const coreRowModel = getCoreRowModel<Project>();
+  const sortedRowModel = getSortedRowModel<Project>();
   const [showAddProjectModal, setShowAddProjectModal] = useState(false);
   const options: TableOptions<Project> = {
     getCoreRowModel: coreRowModel,
+    getSortedRowModel: sortedRowModel,
     columns,
     data,
     rowCount: projectsResult.data?.total || 0,
     state: {
-      pagination
+      pagination,
+      sorting
     },
     onPaginationChange: setPagination,
-    manualPagination: true
+    manualPagination: true,
+    onSortingChange: setSorting,
+    manualSorting: true
   };
   const table = useReactTable<Project>(options);
 

@@ -64,10 +64,10 @@ const blftmaApi = createApi({
     }),
 
     getProjects: builder.query<ProjectsResult, GetProjectsQueryArgs>({
-      query: ({ q, page, size }: GetProjectsQueryArgs) =>
+      query: ({ q, page, size, sort }: GetProjectsQueryArgs) =>
         ({
           url: `/projects`,
-          params: { q, page, size },
+          params: { q, page, size, sort },
           method: 'GET'
         }) as BaseQueryArgs,
       providesTags: ['Projects']
