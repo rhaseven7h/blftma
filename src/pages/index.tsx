@@ -1,3 +1,4 @@
+import DefaultLayout from '@/layouts/default';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 export async function getStaticProps({ locale }: { locale: string }) {
@@ -9,5 +10,5 @@ export async function getStaticProps({ locale }: { locale: string }) {
 }
 
 export default function Index() {
-  return <div>Index Page</div>;
+  return <DefaultLayout>Index Page</DefaultLayout>;
 }
