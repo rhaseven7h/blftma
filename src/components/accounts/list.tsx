@@ -5,8 +5,8 @@ import { Loading } from '@/components/common/loading';
 import { NoData } from '@/components/common/no-data';
 import { DEFAULT_PAGE_SIZE } from '@/constants/common';
 import blftmaApi from '@/store/services/blftma';
-import { Account } from '@/types/accounts';
-import { getApiErrorElements } from '@/util/api';
+import { Account, Accounts } from '@/types/accounts';
+import { getErrorMessage } from '@/util/api';
 import { toastGenericError, toastRTKQResponse } from '@/util/rtkq';
 import { Button, Pagination, Table } from 'flowbite-react';
 import { range } from 'lodash';
@@ -82,7 +82,7 @@ const AccountsList = () => {
       closeDeleteAccountModal();
       toast(t('account_deleted_successfully'), { type: 'success' });
     } catch (error) {
-      const { message } = getApiErrorElements(error);
+      const message = getErrorMessage(error);
       toast(t('failed_to_delete_account') + `: ${message}.`, { type: 'error' });
     }
   };
@@ -118,14 +118,13 @@ const AccountsList = () => {
       <Table
         striped
         hoverable
-        theme={accountsTableTheme}
         data-testid={'accounts-list-table'}>
         <Table.Head>
           <Table.HeadCell>{t('account_name')}</Table.HeadCell>
           <Table.HeadCell className={'text-right'}>{t('actions')}</Table.HeadCell>
         </Table.Head>
         <Table.Body>
-          {getAccountsResult.data.accounts.map((account) => (
+          {([] as Accounts).map((account) => (
             <Table.Row key={account.id}>
               <Table.Cell className={''}>{account.name}</Table.Cell>
               <Table.Cell className={'flex flex-row flex-nowrap gap-2 justify-end'}>
@@ -154,29 +153,29 @@ const AccountsList = () => {
       </Table>
       <div className={'flex flex-col items-center justify-center'}>
         <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={onPageChangeHandler}
+          currentPage={1}
+          totalPages={1}
+          onPageChange={() => {}}
           showIcons
         />
         <div>
           {t('showing_accounts')} <span className={'font-bold'}>{(page - 1) * DEFAULT_PAGE_SIZE + 1}</span> {t('to')}{' '}
           <span className={'font-bold'}>{page * DEFAULT_PAGE_SIZE}</span> {t('out_of')}{' '}
-          <span className={'font-bold'}>{totalAccounts}</span> {t('accountsLowercase')}{' '}
+          <span className={'font-bold'}>{1}</span> {t('accountsLowercase')}{' '}
         </div>
         <div className={'flex flex-row flex-nowrap gap-2 items-center'}>
           <span>{t('in_page')}</span>
           <Select
             isSearchable={false}
             onChange={(selected) => selected && setPage(selected.value as number)}
-            value={{ value: currentPage, label: currentPage }}
-            options={range(totalPages).map((i) => ({
+            value={{ value: 1, label: 1 }}
+            options={range(1).map((i) => ({
               value: i + 1,
               label: i + 1
             }))}
           />
           <span>
-            {t('out_of')} <span className={'font-bold'}>{totalPages}</span> {t('pages')}
+            {t('out_of')} <span className={'font-bold'}>{1}</span> {t('pages')}
           </span>
         </div>
       </div>

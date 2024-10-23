@@ -10,6 +10,5 @@ export default NavbarMenuItems;
 
 export type ApiError = {
   code: string;
-  name: string;
   message: string;
 };

@@ -1,6 +1,6 @@
 import { Account } from '@/types/accounts';
 import { ApiError } from '@/types/application';
-import { getApiErrorElements } from '@/util/api';
+import { getErrorMessage } from '@/util/api';
 import { PrismaClient } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { z } from 'zod';
@@ -32,15 +32,14 @@ const getAccountHandler = async (req: NextApiRequest, res: NextApiResponse<Accou
     if (!account) {
       res.status(404).json({
         code: '350d8a87-233d-4dd6-aa72-372f72458138',
-        name: 'not-found',
         message: 'Account not found'
       });
       return;
     }
     res.status(200).json(account);
   } catch (error) {
-    const { name, message } = getApiErrorElements(error);
-    res.status(500).json({ code: '1cb2bea8-1c28-4edb-9b89-ed2f091bbfea', name, message } as ApiError);
+    const message = getErrorMessage(error);
+    res.status(500).json({ code: '1cb2bea8-1c28-4edb-9b89-ed2f091bbfea', message } as ApiError);
   }
 };
 
@@ -86,8 +85,8 @@ const updateAccountHandler = async (req: NextApiRequest, res: NextApiResponse<Ac
     });
     res.status(200).json(updatedAccount);
   } catch (error) {
-    const { name, message } = getApiErrorElements(error);
-    res.status(500).json({ code: '0259fea2-5f3d-48c9-9900-fbd3d49f986f', name, message } as ApiError);
+    const message = getErrorMessage(error);
+    res.status(500).json({ code: '0259fea2-5f3d-48c9-9900-fbd3d49f986f', message } as ApiError);
   }
 };
 
@@ -116,8 +115,8 @@ const deleteAccountHandler = async (req: NextApiRequest, res: NextApiResponse<Ac
     });
     res.status(200).end();
   } catch (error) {
-    const { name, message } = getApiErrorElements(error);
-    res.status(500).json({ code: '7f53fc80-b1e9-4da8-977b-d8f803625bd0', name, message } as ApiError);
+    const message = getErrorMessage(error);
+    res.status(500).json({ code: '7f53fc80-b1e9-4da8-977b-d8f803625bd0', message } as ApiError);
   }
 };
 

@@ -4,7 +4,8 @@ import { Table_Foot, Table_FootCell, Table_FootRow } from '@/components/common/t
 import { projectsListColumnsDefinitions } from '@/components/projects/column-definitions';
 import { DEFAULT_PAGE_SIZE } from '@/constants/common';
 import blftmaApi from '@/store/services/blftma';
-import { Project } from '@/types/projects';
+import { Project, Projects } from '@/types/projects';
+import { getApiErrorEntityPassthrough } from '@/util/testing/get-api-error-or-entity';
 import {
   flexRender,
   getCoreRowModel,
@@ -19,13 +20,14 @@ import { TbSortAscending, TbSortDescending } from 'react-icons/tb';
 
 const ProjectsListTable = () => {
   const projectsResult = blftmaApi.useGetProjectsQuery();
+  const result = getApiErrorEntityPassthrough<Projects>(projectsResult);
   const table = useReactTable<Project>({
     columns: projectsListColumnsDefinitions,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    data: projectsResult.data ?? [],
-    rowCount: projectsResult.data?.length ?? 0,
+    data: result.entity ?? [],
+    rowCount: result.entity?.length ?? 0,
     enableSorting: true,
     initialState: {
       pagination: {

@@ -12,11 +12,12 @@ import { BaseQueryArgs } from '@/types/base-query';
 import { Projects } from '@/types/projects';
 import { createApi } from '@reduxjs/toolkit/query/react';
 
-// Define a service using a base URL and expected endpoints
+const urlPrefix = process.env.NODE_ENV === 'test' ? 'http://localhost:3000' : '';
+
 const blftmaApi = createApi({
   reducerPath: 'blftmaApi',
-  baseQuery: axiosBaseQuery({ baseUrl: '/api' }),
-  tagTypes: ['Accounts', 'Projects', 'Projects2'],
+  baseQuery: axiosBaseQuery({ baseUrl: urlPrefix + '/api' }),
+  tagTypes: ['Accounts', 'Projects'],
   endpoints: (builder) => ({
     getAccounts: builder.query<Accounts | ApiError, void>({
       query: () =>
