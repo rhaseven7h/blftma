@@ -8,7 +8,7 @@ exports[`AccountsList should render correctly 1`] = `
     accounts
   </h2>
   <div
-    class="relative border border-neutral-300 rounded-lg pb-2"
+    class="relative"
     data-testid="table-element"
   >
     <div
@@ -19,16 +19,16 @@ exports[`AccountsList should render correctly 1`] = `
       data-testid="accounts-list-table"
     >
       <thead
-        class="group/head uppercase text-gray-700 dark:text-gray-400 text-base"
+        class="group/head text-xs uppercase text-gray-700 dark:text-gray-400"
       >
         <tr>
           <th
-            class="px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700 bg-neutral-200"
+            class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700"
           >
             account_name
           </th>
           <th
-            class="px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700 bg-neutral-200 text-right"
+            class="bg-gray-50 px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg dark:bg-gray-700 text-right"
           >
             actions
           </th>
@@ -36,478 +36,7 @@ exports[`AccountsList should render correctly 1`] = `
       </thead>
       <tbody
         class="group/body"
-      >
-        <tr
-          class="group/row odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-          data-testid="table-row-element"
-        >
-          <td
-            class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
-          >
-            Brekke LLC
-          </td>
-          <td
-            class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg flex flex-row flex-nowrap gap-2 justify-end"
-          >
-            <button
-              class="group relative flex items-stretch justify-center p-0.5 text-center font-medium transition-[color,background-color,border-color,text-decoration-color,fill,stroke,box-shadow] focus:z-10 focus:outline-none border border-transparent bg-cyan-700 text-white focus:ring-4 focus:ring-cyan-300 enabled:hover:bg-cyan-800 dark:bg-cyan-600 dark:focus:ring-cyan-800 dark:enabled:hover:bg-cyan-700 rounded-lg"
-              type="button"
-            >
-              <span
-                class="flex items-stretch transition-all duration-200 rounded-md px-2 py-1 text-xs"
-              >
-                <div
-                  class="flex flex-row flex-nowrap gap-1 items-center"
-                >
-                  <svg
-                    fill="none"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"
-                    />
-                    <path
-                      d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"
-                    />
-                    <path
-                      d="M16 5l3 3"
-                    />
-                  </svg>
-                  <span>
-                    edit
-                  </span>
-                </div>
-              </span>
-            </button>
-            <button
-              class="group relative flex items-stretch justify-center p-0.5 text-center font-medium transition-[color,background-color,border-color,text-decoration-color,fill,stroke,box-shadow] focus:z-10 focus:outline-none border border-transparent bg-red-700 text-white focus:ring-4 focus:ring-red-300 enabled:hover:bg-red-800 dark:bg-red-600 dark:focus:ring-red-900 dark:enabled:hover:bg-red-700 rounded-lg"
-              type="button"
-            >
-              <span
-                class="flex items-stretch transition-all duration-200 rounded-md px-2 py-1 text-xs"
-              >
-                <div
-                  class="flex flex-row flex-nowrap gap-1 items-center"
-                >
-                  <svg
-                    fill="none"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M4 7l16 0"
-                    />
-                    <path
-                      d="M10 11l0 6"
-                    />
-                    <path
-                      d="M14 11l0 6"
-                    />
-                    <path
-                      d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
-                    />
-                    <path
-                      d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"
-                    />
-                  </svg>
-                  <span>
-                    delete
-                  </span>
-                </div>
-              </span>
-            </button>
-          </td>
-        </tr>
-        <tr
-          class="group/row odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-          data-testid="table-row-element"
-        >
-          <td
-            class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
-          >
-            Donnelly - Kiehn
-          </td>
-          <td
-            class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg flex flex-row flex-nowrap gap-2 justify-end"
-          >
-            <button
-              class="group relative flex items-stretch justify-center p-0.5 text-center font-medium transition-[color,background-color,border-color,text-decoration-color,fill,stroke,box-shadow] focus:z-10 focus:outline-none border border-transparent bg-cyan-700 text-white focus:ring-4 focus:ring-cyan-300 enabled:hover:bg-cyan-800 dark:bg-cyan-600 dark:focus:ring-cyan-800 dark:enabled:hover:bg-cyan-700 rounded-lg"
-              type="button"
-            >
-              <span
-                class="flex items-stretch transition-all duration-200 rounded-md px-2 py-1 text-xs"
-              >
-                <div
-                  class="flex flex-row flex-nowrap gap-1 items-center"
-                >
-                  <svg
-                    fill="none"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"
-                    />
-                    <path
-                      d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"
-                    />
-                    <path
-                      d="M16 5l3 3"
-                    />
-                  </svg>
-                  <span>
-                    edit
-                  </span>
-                </div>
-              </span>
-            </button>
-            <button
-              class="group relative flex items-stretch justify-center p-0.5 text-center font-medium transition-[color,background-color,border-color,text-decoration-color,fill,stroke,box-shadow] focus:z-10 focus:outline-none border border-transparent bg-red-700 text-white focus:ring-4 focus:ring-red-300 enabled:hover:bg-red-800 dark:bg-red-600 dark:focus:ring-red-900 dark:enabled:hover:bg-red-700 rounded-lg"
-              type="button"
-            >
-              <span
-                class="flex items-stretch transition-all duration-200 rounded-md px-2 py-1 text-xs"
-              >
-                <div
-                  class="flex flex-row flex-nowrap gap-1 items-center"
-                >
-                  <svg
-                    fill="none"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M4 7l16 0"
-                    />
-                    <path
-                      d="M10 11l0 6"
-                    />
-                    <path
-                      d="M14 11l0 6"
-                    />
-                    <path
-                      d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
-                    />
-                    <path
-                      d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"
-                    />
-                  </svg>
-                  <span>
-                    delete
-                  </span>
-                </div>
-              </span>
-            </button>
-          </td>
-        </tr>
-        <tr
-          class="group/row odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-          data-testid="table-row-element"
-        >
-          <td
-            class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
-          >
-            Fay Inc
-          </td>
-          <td
-            class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg flex flex-row flex-nowrap gap-2 justify-end"
-          >
-            <button
-              class="group relative flex items-stretch justify-center p-0.5 text-center font-medium transition-[color,background-color,border-color,text-decoration-color,fill,stroke,box-shadow] focus:z-10 focus:outline-none border border-transparent bg-cyan-700 text-white focus:ring-4 focus:ring-cyan-300 enabled:hover:bg-cyan-800 dark:bg-cyan-600 dark:focus:ring-cyan-800 dark:enabled:hover:bg-cyan-700 rounded-lg"
-              type="button"
-            >
-              <span
-                class="flex items-stretch transition-all duration-200 rounded-md px-2 py-1 text-xs"
-              >
-                <div
-                  class="flex flex-row flex-nowrap gap-1 items-center"
-                >
-                  <svg
-                    fill="none"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"
-                    />
-                    <path
-                      d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"
-                    />
-                    <path
-                      d="M16 5l3 3"
-                    />
-                  </svg>
-                  <span>
-                    edit
-                  </span>
-                </div>
-              </span>
-            </button>
-            <button
-              class="group relative flex items-stretch justify-center p-0.5 text-center font-medium transition-[color,background-color,border-color,text-decoration-color,fill,stroke,box-shadow] focus:z-10 focus:outline-none border border-transparent bg-red-700 text-white focus:ring-4 focus:ring-red-300 enabled:hover:bg-red-800 dark:bg-red-600 dark:focus:ring-red-900 dark:enabled:hover:bg-red-700 rounded-lg"
-              type="button"
-            >
-              <span
-                class="flex items-stretch transition-all duration-200 rounded-md px-2 py-1 text-xs"
-              >
-                <div
-                  class="flex flex-row flex-nowrap gap-1 items-center"
-                >
-                  <svg
-                    fill="none"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M4 7l16 0"
-                    />
-                    <path
-                      d="M10 11l0 6"
-                    />
-                    <path
-                      d="M14 11l0 6"
-                    />
-                    <path
-                      d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
-                    />
-                    <path
-                      d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"
-                    />
-                  </svg>
-                  <span>
-                    delete
-                  </span>
-                </div>
-              </span>
-            </button>
-          </td>
-        </tr>
-        <tr
-          class="group/row odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-          data-testid="table-row-element"
-        >
-          <td
-            class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
-          >
-            Friesen, Kohler and Homenick
-          </td>
-          <td
-            class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg flex flex-row flex-nowrap gap-2 justify-end"
-          >
-            <button
-              class="group relative flex items-stretch justify-center p-0.5 text-center font-medium transition-[color,background-color,border-color,text-decoration-color,fill,stroke,box-shadow] focus:z-10 focus:outline-none border border-transparent bg-cyan-700 text-white focus:ring-4 focus:ring-cyan-300 enabled:hover:bg-cyan-800 dark:bg-cyan-600 dark:focus:ring-cyan-800 dark:enabled:hover:bg-cyan-700 rounded-lg"
-              type="button"
-            >
-              <span
-                class="flex items-stretch transition-all duration-200 rounded-md px-2 py-1 text-xs"
-              >
-                <div
-                  class="flex flex-row flex-nowrap gap-1 items-center"
-                >
-                  <svg
-                    fill="none"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"
-                    />
-                    <path
-                      d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"
-                    />
-                    <path
-                      d="M16 5l3 3"
-                    />
-                  </svg>
-                  <span>
-                    edit
-                  </span>
-                </div>
-              </span>
-            </button>
-            <button
-              class="group relative flex items-stretch justify-center p-0.5 text-center font-medium transition-[color,background-color,border-color,text-decoration-color,fill,stroke,box-shadow] focus:z-10 focus:outline-none border border-transparent bg-red-700 text-white focus:ring-4 focus:ring-red-300 enabled:hover:bg-red-800 dark:bg-red-600 dark:focus:ring-red-900 dark:enabled:hover:bg-red-700 rounded-lg"
-              type="button"
-            >
-              <span
-                class="flex items-stretch transition-all duration-200 rounded-md px-2 py-1 text-xs"
-              >
-                <div
-                  class="flex flex-row flex-nowrap gap-1 items-center"
-                >
-                  <svg
-                    fill="none"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M4 7l16 0"
-                    />
-                    <path
-                      d="M10 11l0 6"
-                    />
-                    <path
-                      d="M14 11l0 6"
-                    />
-                    <path
-                      d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
-                    />
-                    <path
-                      d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"
-                    />
-                  </svg>
-                  <span>
-                    delete
-                  </span>
-                </div>
-              </span>
-            </button>
-          </td>
-        </tr>
-        <tr
-          class="group/row odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-          data-testid="table-row-element"
-        >
-          <td
-            class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg"
-          >
-            Lemke Group
-          </td>
-          <td
-            class="px-6 py-4 group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg flex flex-row flex-nowrap gap-2 justify-end"
-          >
-            <button
-              class="group relative flex items-stretch justify-center p-0.5 text-center font-medium transition-[color,background-color,border-color,text-decoration-color,fill,stroke,box-shadow] focus:z-10 focus:outline-none border border-transparent bg-cyan-700 text-white focus:ring-4 focus:ring-cyan-300 enabled:hover:bg-cyan-800 dark:bg-cyan-600 dark:focus:ring-cyan-800 dark:enabled:hover:bg-cyan-700 rounded-lg"
-              type="button"
-            >
-              <span
-                class="flex items-stretch transition-all duration-200 rounded-md px-2 py-1 text-xs"
-              >
-                <div
-                  class="flex flex-row flex-nowrap gap-1 items-center"
-                >
-                  <svg
-                    fill="none"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"
-                    />
-                    <path
-                      d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"
-                    />
-                    <path
-                      d="M16 5l3 3"
-                    />
-                  </svg>
-                  <span>
-                    edit
-                  </span>
-                </div>
-              </span>
-            </button>
-            <button
-              class="group relative flex items-stretch justify-center p-0.5 text-center font-medium transition-[color,background-color,border-color,text-decoration-color,fill,stroke,box-shadow] focus:z-10 focus:outline-none border border-transparent bg-red-700 text-white focus:ring-4 focus:ring-red-300 enabled:hover:bg-red-800 dark:bg-red-600 dark:focus:ring-red-900 dark:enabled:hover:bg-red-700 rounded-lg"
-              type="button"
-            >
-              <span
-                class="flex items-stretch transition-all duration-200 rounded-md px-2 py-1 text-xs"
-              >
-                <div
-                  class="flex flex-row flex-nowrap gap-1 items-center"
-                >
-                  <svg
-                    fill="none"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M4 7l16 0"
-                    />
-                    <path
-                      d="M10 11l0 6"
-                    />
-                    <path
-                      d="M14 11l0 6"
-                    />
-                    <path
-                      d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
-                    />
-                    <path
-                      d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"
-                    />
-                  </svg>
-                  <span>
-                    delete
-                  </span>
-                </div>
-              </span>
-            </button>
-          </td>
-        </tr>
-      </tbody>
+      />
     </table>
   </div>
   <div
@@ -545,35 +74,10 @@ exports[`AccountsList should render correctly 1`] = `
             Previous
           </button>
         </li>
-        <li
-          aria-current="page"
-        >
-          <button
-            class="w-12 border border-gray-300 py-2 leading-tight enabled:hover:bg-gray-100 enabled:hover:text-gray-700 enabled:dark:hover:bg-gray-700 enabled:dark:hover:text-white bg-cyan-50 text-cyan-600 hover:bg-cyan-100 hover:text-cyan-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
-            type="button"
-          >
-            1
-          </button>
-        </li>
         <li>
           <button
-            class="w-12 border border-gray-300 bg-white py-2 leading-tight text-gray-500 enabled:hover:bg-gray-100 enabled:hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 enabled:dark:hover:bg-gray-700 enabled:dark:hover:text-white"
-            type="button"
-          >
-            2
-          </button>
-        </li>
-        <li>
-          <button
-            class="w-12 border border-gray-300 bg-white py-2 leading-tight text-gray-500 enabled:hover:bg-gray-100 enabled:hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 enabled:dark:hover:bg-gray-700 enabled:dark:hover:text-white"
-            type="button"
-          >
-            3
-          </button>
-        </li>
-        <li>
-          <button
-            class="rounded-r-lg border border-gray-300 bg-white px-3 py-2 leading-tight text-gray-500 enabled:hover:bg-gray-100 enabled:hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 enabled:dark:hover:bg-gray-700 enabled:dark:hover:text-white inline-flex"
+            class="cursor-not-allowed opacity-50 rounded-r-lg border border-gray-300 bg-white px-3 py-2 leading-tight text-gray-500 enabled:hover:bg-gray-100 enabled:hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 enabled:dark:hover:bg-gray-700 enabled:dark:hover:text-white inline-flex"
+            disabled=""
             type="button"
           >
             Next
@@ -620,7 +124,7 @@ exports[`AccountsList should render correctly 1`] = `
       <span
         class="font-bold"
       >
-        12
+        1
       </span>
        
       accountsLowercase
@@ -703,7 +207,7 @@ exports[`AccountsList should render correctly 1`] = `
         <span
           class="font-bold"
         >
-          3
+          1
         </span>
          
         pages

@@ -24,13 +24,9 @@ export const getApiErrorEntityPassthrough = <T>(
   if (!result || typeof result !== 'object') {
     return { passthrough: result };
   } else if ('data' in (asSomeEntity ?? {})) {
-    return { entity: asSomeEntity.data };
-  } else if (
-    'code' in (asSomeApiError.error ?? {}) &&
-    'name' in (asSomeApiError.error ?? {}) &&
-    'message' in (asSomeApiError.error ?? {})
-  ) {
-    return { error: asSomeApiError.error };
+    return { entity: asSomeEntity.data as T };
+  } else if ('code' in (asSomeApiError.error ?? {}) && 'message' in (asSomeApiError.error ?? {})) {
+    return { error: asSomeApiError.error as ApiError };
   } else {
     return { passthrough: result };
   }

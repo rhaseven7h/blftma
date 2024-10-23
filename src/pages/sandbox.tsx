@@ -1,8 +1,7 @@
-import blftmaApi from '@/store/services/blftma';
+import Sandbox from '@/components/sandbox';
 
 const SandboxPage = () => {
-  const result = blftmaApi.useGetProjectsQuery();
-  return <pre>{JSON.stringify(result, null, 2)}</pre>;
+  return <Sandbox />;
 };
 
 export default SandboxPage;

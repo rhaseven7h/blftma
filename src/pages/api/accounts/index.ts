@@ -1,7 +1,7 @@
 import { MAX_FETCH_LIST_LIMIT } from '@/constants/common';
 import { Account, Accounts } from '@/types/accounts';
 import { ApiError } from '@/types/application';
-import { getApiErrorElements } from '@/util/api';
+import { getErrorMessage } from '@/util/api';
 import { PrismaClient } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { z } from 'zod';
@@ -15,8 +15,8 @@ const getAccountsHandler = async (_req: NextApiRequest, res: NextApiResponse<Acc
     });
     res.status(200).json(accounts);
   } catch (error) {
-    const { name, message } = getApiErrorElements(error);
-    res.status(500).json({ code: 'b323ae3d-9874-4675-b292-56b58871849f', name, message } as ApiError);
+    const message = getErrorMessage(error);
+    res.status(500).json({ code: 'b323ae3d-9874-4675-b292-56b58871849f', message } as ApiError);
   }
 };
 
@@ -43,8 +43,8 @@ const createAccountHandler = async (req: NextApiRequest, res: NextApiResponse<Ac
     });
     res.status(201).json(account);
   } catch (error) {
-    const { name, message } = getApiErrorElements(error);
-    res.status(500).json({ code: '577cb235-63dd-42c1-aef3-54551c96c687', name, message } as ApiError);
+    const message = getErrorMessage(error);
+    res.status(500).json({ code: '577cb235-63dd-42c1-aef3-54551c96c687', message } as ApiError);
   }
 };
 

@@ -1,7 +1,7 @@
 import { MAX_FETCH_LIST_LIMIT } from '@/constants/common';
 import { ApiError } from '@/types/application';
 import { Projects } from '@/types/projects';
-import { getApiErrorElements } from '@/util/api';
+import { getErrorMessage } from '@/util/api';
 import { PrismaClient } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 
@@ -15,11 +15,10 @@ const getProjectsHandler = async (_req: NextApiRequest, res: NextApiResponse<Pro
         account: true
       }
     });
-    // res.status(200).json(projects as Projects);
-    res.status(404).json({ code: 'someErrorData', name: 'someErrorName', message: 'someErrorMessage' } as ApiError);
+    res.status(200).json(projects as Projects);
   } catch (error) {
-    const { name, message } = getApiErrorElements(error);
-    res.status(500).json({ code: 'b760cd19-bd7d-4b33-bb26-561bf7b642d0', name, message } as ApiError);
+    const message = getErrorMessage(error);
+    res.status(500).json({ code: 'bcd92ebd-142d-47db-b660-7e4e1f6215ff', message });
   }
 };
 
@@ -31,8 +30,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Projects | ApiE
     default:
       res.setHeader('Allow', ['GET']);
       res.status(405).json({
-        code: '304bc181-37b7-4450-afbd-6b717a3b2656',
-        name: 'method-not-allowed',
+        code: '27ea6c98-7fc5-4009-8329-53d5ebae6dec',
         message: `Method ${req.method} Not Allowed`
       });
   }
