@@ -1,26 +1,25 @@
-import NavbarMenuItems, { NavbarMenuItem } from '@/types/application';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
 export interface ApplicationState {
-  selectedMenuItem: NavbarMenuItem;
+  count: number;
 }
 
 const initialState: ApplicationState = {
-  selectedMenuItem: NavbarMenuItems.HOME
+  count: 0
 };
 
 export const applicationSlice = createSlice({
   name: 'application',
   initialState,
   reducers: {
-    setSelectedMenuItem: (state, action: PayloadAction<NavbarMenuItem>) => {
-      state.selectedMenuItem = action.payload;
+    setCount: (state, action: PayloadAction<number>) => {
+      state.count = action.payload;
     }
   }
 });
 
 // Action creators are generated for each case reducer function
-export const { setSelectedMenuItem } = applicationSlice.actions;
+export const { setCount } = applicationSlice.actions;
 
 export default applicationSlice.reducer;

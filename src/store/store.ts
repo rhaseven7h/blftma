@@ -1,4 +1,4 @@
-import applicationReducer from '@/store/features/applicationSlice';
+import applicationReducer from '@/store/features/application-slice';
 import blftmaApi from '@/store/services/blftma';
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
@@ -8,8 +8,7 @@ export const store = configureStore({
     application: applicationReducer,
     [blftmaApi.reducerPath]: blftmaApi.reducer
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(blftmaApi.middleware)
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(blftmaApi.middleware)
 });
 
 setupListeners(store.dispatch);
