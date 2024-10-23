@@ -9,13 +9,14 @@ const prisma = new PrismaClient();
 
 const getProjectsHandler = async (_req: NextApiRequest, res: NextApiResponse<Projects | ApiError>) => {
   try {
-    const accounts = await prisma.projects.findMany({
+    const projects = await prisma.projects.findMany({
       take: MAX_FETCH_LIST_LIMIT,
       include: {
         account: true
       }
     });
-    res.status(200).json(accounts as Projects);
+    // res.status(200).json(projects as Projects);
+    res.status(404).json({ code: 'someErrorData', name: 'someErrorName', message: 'someErrorMessage' } as ApiError);
   } catch (error) {
     const { name, message } = getApiErrorElements(error);
     res.status(500).json({ code: 'b760cd19-bd7d-4b33-bb26-561bf7b642d0', name, message } as ApiError);

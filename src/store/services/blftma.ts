@@ -16,7 +16,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 const blftmaApi = createApi({
   reducerPath: 'blftmaApi',
   baseQuery: axiosBaseQuery({ baseUrl: '/api' }),
-  tagTypes: ['Accounts', 'Projects', 'Projects2'],
+  tagTypes: ['Accounts', 'Projects'],
   endpoints: (builder) => ({
     getAccounts: builder.query<Accounts | ApiError, void>({
       query: () =>
